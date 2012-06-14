@@ -1,0 +1,2 @@
+module VacationManagersHelper
+end
