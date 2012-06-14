@@ -1,4 +1,0 @@
-%h2=l(:label_hr_member_plural)
-
-#content-users
-  =render :partial => 'users'
