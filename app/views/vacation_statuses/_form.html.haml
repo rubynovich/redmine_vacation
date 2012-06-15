@@ -1,0 +1,6 @@
+= error_messages_for 'vacation_status'
+
+.box.tabular
+  %p= f.text_field :name, :required => true
+  %p= f.check_box :is_default
+  %p= f.check_box :is_planned
