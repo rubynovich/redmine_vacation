@@ -1,0 +1,7 @@
+# Russian strings go here for Rails i18n
+ru:
+  label_vacation_status_plural: "Причины отпуска"
+  label_vacation_status_new: "новая причина отпуска"
+  label_vacation_manager_plural: "Отпуск-менеджеры"
+  field_vacation_status: "Причина отпуска"
+  field_is_planned: "Плановый"
