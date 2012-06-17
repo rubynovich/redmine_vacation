@@ -1,0 +1,27 @@
+.contextual
+  = link_to l(:label_vacation_range_new), new_vacation_range_path, :class => 'icon icon-add'
+
+%h2=l(:label_vacation_plural)
+
+%table.list
+  %thead
+    %tr
+      %th=l(:field_user)
+      %th=l(:field_last_planned_vacation)
+      %th=l(:field_active_planned_vacation)
+      %th=l(:field_not_planned_vacation)
+      %th
+  %tbody
+    - for vacation in @vacations
+      %tr{:class=>cycle("odd", "even")}
+        %td= h(vacation.user)        
+        %td{:align=>"center"}= h(vacation.last_planned_vacation)
+        %td{:align=>"center"}= h(vacation.active_planned_vacation)
+        %td{:align=>"center"}= h(vacation.not_planned_vacation)        
+        %td.buttons
+          = link_to l(:button_update), {:action => 'edit', :id => vacation.id}, :class => 'icon icon-edit'
+          = link_to(l(:button_delete), vacation_path(vacation), :method => :delete, :confirm => l(:text_are_you_sure), :class => 'icon icon-del')
+
+%p.pagination= pagination_links_full @vacation_pages
+
+- html_title(l(:label_vacation_plural))

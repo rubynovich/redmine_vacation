@@ -1,0 +1,14 @@
+= error_messages_for 'vacation_range'
+
+.box.tabular
+  %p= f.select :user_id, User.all.map {|c| [c.name, c.id]}, :required => true, :prompt => t(:prompt_please_select)
+  %p= f.select :vacation_status_id, VacationStatus.all.map {|c| [c.name, c.id]}, :required => true, :prompt => t(:prompt_please_select)
+  %p
+    = f.text_field :start_date, :size => 10, :label => l(:field_vacation_start_date)
+    = calendar_for('vacation_range_start_date')
+  %p
+    = f.text_field :end_date, :size => 10, :label => l(:field_vacation_end_date)
+    = calendar_for('vacation_range_end_date')
+
+  
+

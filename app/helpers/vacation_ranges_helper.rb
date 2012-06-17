@@ -1,0 +1,2 @@
+module VacationRangesHelper
+end
