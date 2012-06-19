@@ -22,6 +22,9 @@ class VacationRange < ActiveRecord::Base
     end
   }
   
+  named_scope :for_vacation_status, lambda{ |status|
+    {:conditions => {:vacation_status_id => status}}
+  }
   
   named_scope :for_user, lambda { |user|
     {:conditions => 
