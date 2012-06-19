@@ -1,6 +1,9 @@
 class VacationsController < ApplicationController
   unloadable
   before_filter :require_vacation_manager
+  
+  helper :sort
+  include SortHelper
 
   # GET /vacations/
   def index
@@ -31,7 +34,23 @@ class VacationsController < ApplicationController
   
   # GET /vacations/1
   def show
+    sort_init 'start_date', 'desc'
+    sort_update %w(start_date end_date vacation_status_id)
+  
     @vacation = Vacation.find(params[:id])
+    
+    @limit = per_page_option
+    
+    scope = VacationRange.for_user(@vacation.user_id)
+    
+    @vacation_ranges_count = scope.count
+    @vacation_range_pages = Paginator.new self, @vacation_ranges_count, @limit, params[:page]
+    @offset ||= @vacation_range_pages.current.offset
+    @vacation_ranges =  scope.find  :all,
+                                  :order => sort_clause,
+                                  :limit  =>  @limit,
+                                  :offset =>  @offset
+                                                                        
   end  
   
 

@@ -5,9 +5,42 @@ class VacationRange < ActiveRecord::Base
   belongs_to :vacation_status  
   
   after_create :change_vacation
+  after_save :change_vacation
   
   validates_presence_of :user_id, :start_date, :vacation_status_id
   validate :dates_is_range
+
+  named_scope :limit, lambda {|limit|
+      {:limit => limit}
+  }
+  
+  named_scope :order_by_start_date, lambda {|q|
+    if q.present?
+      {:order => "start_date #{q}"}
+    else
+      {:order => "start_date"}
+    end
+  }
+  
+  
+  named_scope :for_user, lambda { |user|
+    {:conditions => 
+        ["user_id = :user", {:user => user}]}
+  }
+  
+  named_scope :planned_vacations, lambda {
+    {:conditions => 
+      ["vacation_statuses.is_planned = :status", 
+      {:status => true}],
+    :joins => :vacation_status}
+  }
+  
+  named_scope :not_planned_vacations, lambda {
+    {:conditions => 
+      ["vacation_statuses.is_planned = :status", 
+      {:status => false}],
+    :joins => :vacation_status}
+  }
   
   def to_s
     str = format_date(start_date)
@@ -22,24 +55,24 @@ class VacationRange < ActiveRecord::Base
   
   def change_vacation
     vacation = Vacation.find_by_user_id(user_id) || Vacation.create(:user_id => user_id)
-
-    if vacation_status.is_planned?
-      if vacation.active_planned_vacation &&
-        vacation.active_planned_vacation.start_date < start_date
-        vacation.update_attribute(:last_planned_vacation_id,
-          vacation.active_planned_vacation_id)
-        vacation.update_attribute(:active_planned_vacation_id,
-          self.id)
-      elsif vacation.last_planned_vacation &&
-        vacation.last_planned_vacation.start_date < start_date
-        vacation.update_attribute(:last_planned_vacation_id,
-          self.id)
-      else
-        vacation.update_attribute(:active_planned_vacation_id,
-          self.id)
-      end
-    else
-      vacation.update_attribute(:not_planned_vacation_id, self.id)
-    end
+    
+    active_planned, last_planned = *VacationRange.
+      planned_vacations.
+      for_user(user_id).
+      limit(2).
+      order_by_start_date("DESC").
+      all
+    
+    not_planned = VacationRange.
+      not_planned_vacations.
+      for_user(user_id).
+      order_by_start_date("DESC").
+      first
+    
+    vacation.update_attributes(
+      :last_planned_vacation => last_planned,
+      :active_planned_vacation => active_planned,
+      :not_planned_vacation => not_planned
+    )
   end
 end

@@ -10,7 +10,7 @@ class VacationRangesController < ApplicationController
 
   # GET /vacation_ranges/new
   def new
-    @vacation_range = VacationRange.new
+    @vacation_range = VacationRange.new(:vacation_status => VacationStatus.default)
   end
   
   # POST /vacation_ranges
