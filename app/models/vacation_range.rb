@@ -120,6 +120,10 @@ class VacationRange < ActiveRecord::Base
     end
   end
   
+  def include?(date)
+    (self.start_date <= date) && (self.end_date >= date)
+  end
+  
   def change_vacation
     vacation = Vacation.find_by_user_id(user_id) || Vacation.create(:user_id => user_id)
     

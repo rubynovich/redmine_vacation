@@ -20,4 +20,10 @@ ru:
   label_prev_month: "прошлый месяц"  
   label_next_year: "следующий год"
   label_prev_year: "прошлый год"  
-    
+  activerecord:
+    errors:
+      models:
+        issue:
+          attributes:
+            assigned_to_id:
+              is_vacation: сотруднику, который находится в отпуске
