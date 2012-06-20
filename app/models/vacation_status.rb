@@ -5,7 +5,9 @@ class VacationStatus < ActiveRecord::Base
   
   validates_presence_of :name
   validates_uniqueness_of :name
-     
+  
+  has_many :vacation_ranges, :order => "start_date DESC"
+  
   def update_default
     self.class.update_all("is_default=#{connection.quoted_false}", ['id <> ?', id]) if self.is_default?
   end
@@ -20,7 +22,9 @@ class VacationStatus < ActiveRecord::Base
   
   private
     def deletable?
-      true
+      VacationRange.find(:all, 
+        :conditions =>{:vacation_status_id => self.id}
+      ).blank?
     end
     
     def check_integrity

@@ -7,8 +7,18 @@ class VacationsController < ApplicationController
 
   # GET /vacations/
   def index
-    @vacation_pages, @vacations = paginate :vacations, :per_page => 25, :order => "user_id"
-    render :action => "index", :layout => false if request.xhr?
+    @limit = per_page_option
+    
+    scope = Vacation.like_name(params[:name])
+    
+    @vacations_count = scope.count
+    @vacation_pages = Paginator.new self, @vacations_count, @limit, params[:page]
+    @offset ||= @vacation_pages.current.offset
+    @vacations =  scope.find( :all,
+                              :joins => :user,
+                              :order => "firstname, lastname",
+                              :limit  =>  @limit,
+                              :offset =>  @offset )
   end
 
   # GET /vacations/new

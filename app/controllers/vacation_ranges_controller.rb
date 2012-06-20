@@ -2,10 +2,28 @@ class VacationRangesController < ApplicationController
   unloadable
   before_filter :require_vacation_manager
 
+  helper :sort
+  include SortHelper
+
   # GET /vacation_ranges/
   def index
-    @vacation_range_pages, @vacation_ranges = paginate :vacation_ranges, :per_page => 25, :order => "user_id"
-    render :action => "index", :layout => false if request.xhr?
+  
+    sort_init 'start_date', 'desc'
+    sort_update %w(start_date end_date)
+    
+    @limit = per_page_option
+    
+    scope = VacationRange.time_period(params[:time_period_start], :start_date).
+      time_period(params[:time_period_end], :end_date).
+      for_vacation_status(params[:vacation_status_id])
+    
+    @vacation_ranges_count = scope.count
+    @vacation_range_pages = Paginator.new self, @vacation_ranges_count, @limit, params[:page]
+    @offset ||= @vacation_range_pages.current.offset
+    @vacation_ranges =  scope.find  :all,
+                                  :order => sort_clause,
+                                  :limit  =>  @limit,
+                                  :offset =>  @offset
   end
 
   # GET /vacation_ranges/new

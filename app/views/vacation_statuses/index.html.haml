@@ -15,7 +15,7 @@
       %tr{:class=>cycle("odd", "even")}
         %td
           = link_to h(vacation_status.name), vacation_status_path(vacation_status)
-          = "(0)"
+          = "(#{vacation_status.vacation_ranges.count})"
         %td{:align=>"center"}= checked_image vacation_status.is_default?
         %td{:align=>"center"}= checked_image vacation_status.is_planned?        
         %td.buttons

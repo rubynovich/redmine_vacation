@@ -21,16 +21,21 @@ class VacationRange < ActiveRecord::Base
       {:order => "start_date"}
     end
   }
-  
-  named_scope :for_vacation_status, lambda{ |status|
-    {:conditions => {:vacation_status_id => status}}
-  }
-  
+   
   named_scope :for_user, lambda { |user|
-    {:conditions => 
-        ["user_id = :user", {:user => user}]}
+    if user.present?
+      {:conditions => 
+        ["user_id = :user_id", {:user_id => user}]}
+    end
   }
   
+  named_scope :for_vacation_status, lambda { |status|
+    if status.present?
+      {:conditions => 
+        ["vacation_status_id = :status_id", {:status_id => status}]}
+    end
+  }  
+
   named_scope :planned_vacations, lambda {
     {:conditions => 
       ["vacation_statuses.is_planned = :status", 
@@ -44,10 +49,69 @@ class VacationRange < ActiveRecord::Base
       {:status => false}],
     :joins => :vacation_status}
   }
+
+  named_scope :time_period, lambda {|q, field|
+    today = Date.today
+    if q.present? && field.present?
+      {:conditions => 
+        (case q
+          when "yesterday"
+            {field => 1.day.ago}
+          when "today"
+            {field => today}
+          when "tomorrow"
+            {field => 1.day.from_now}
+          when "prev_week"       
+            ["#{field} BETWEEN ? AND ?", 
+              2.week.ago - today.wday.days, 
+              1.week.ago - today.wday.days]            
+          when "this_week"       
+            ["#{field} BETWEEN ? AND ?", 
+              today, 
+              1.week.from_now - today.wday.days]
+          when "next_week"
+            ["#{field} BETWEEN ? AND ?", 
+              1.week.from_now - today.wday.days, 
+              2.week.from_now - today.wday.days]
+          when "prev_month"       
+            ["#{field} BETWEEN ? AND ?", 
+              2.month.ago - today.day.days, 
+              1.month.ago - today.day.days]                          
+          when "this_month"
+            ["#{field} BETWEEN ? AND ?", 
+              today, 
+              1.month.from_now - today.day.days]
+          when "next_month"
+            ["#{field} BETWEEN ? AND ?", 
+              1.month.from_now - today.day.days, 
+              2.month.from_now - today.day.days]
+          when "prev_year"       
+            ["#{field} BETWEEN ? AND ?", 
+              2.year.ago - today.yday.days, 
+              1.year.ago - today.yday.days]                          
+          when "this_year"
+            ["#{field} BETWEEN ? AND ?", 
+              today, 
+              1.year.from_now - today.yday.days]
+          when "next_year"
+            ["#{field} BETWEEN ? AND ?", 
+              1.year.from_now - today.yday.days, 
+              2.year.from_now - today.yday.days]              
+          else
+            {}
+        end)
+      }
+    end
+  }
+
   
   def to_s
     str = format_date(start_date)
-    str + ' - ' + format_date(end_date) if end_date.present?
+    if end_date.present?
+      str + ' - ' + format_date(end_date)
+    else
+      str
+    end
   end
   
   def dates_is_range

@@ -3,6 +3,19 @@
 
 %h2=l(:label_vacation_plural)
 
+- form_tag({}, :method => :get) do
+  %fieldset
+    %legend= l(:label_filter_plural)
+
+    %label{:for=>'name'}= l(:field_user) + ":"
+    = text_field_tag 'name', params[:name], :size => 30
+
+    = submit_tag l(:button_apply), :class => "small", :name => nil
+    = link_to l(:button_clear), {:action => params[:action]}, :class => 'icon icon-reload'
+            
+&nbsp;
+
+
 %table.list
   %thead
     %tr
@@ -25,9 +38,8 @@
           - if vacation.not_planned_vacation.present?
             = link_to(h(vacation.not_planned_vacation), edit_vacation_range_path(vacation.not_planned_vacation))
         %td.buttons
-          = link_to l(:button_update), {:action => 'edit', :id => vacation.id}, :class => 'icon icon-edit'
           = link_to(l(:button_delete), vacation_path(vacation), :method => :delete, :confirm => l(:text_are_you_sure), :class => 'icon icon-del')
 
-%p.pagination= pagination_links_full @vacation_pages
+%p.pagination= pagination_links_full @vacation_pages, @vacations_count
 
 - html_title(l(:label_vacation_plural))
