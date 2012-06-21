@@ -6,6 +6,7 @@ class VacationRange < ActiveRecord::Base
   
   after_create :change_vacation
   after_save :change_vacation
+  after_save :send_notifications
   
   validates_presence_of :user_id, :start_date, :vacation_status_id
   validate :dates_in_row
@@ -152,5 +153,15 @@ class VacationRange < ActiveRecord::Base
       :active_planned_vacation => active_planned,
       :not_planned_vacation => not_planned
     )
+  end
+  
+  def send_notifications
+    Issue.with_author(self.user_id).open.on_vacation(self).all.each{ |issue|
+      VacationMailer.deliver_notification_from_author(issue, self)
+    }
+    
+    Issue.with_assigned_to(self.user_id).open.on_vacation(self).all.each{ |issue|
+      VacationMailer.deliver_notification_from_assigned_to(issue, self)
+    }
   end
 end

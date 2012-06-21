@@ -7,7 +7,26 @@ module VacationIssuePatch
     base.send(:include, InstanceMethods)
     
     base.class_eval do
-      validate :not_vacation
+      validate :assigned_to_on_vacation
+      
+      named_scope :on_vacation, lambda{ |vacation_range|
+        { :conditions => ["(start_date BETWEEN :start_date AND :end_date) OR (due_date BETWEEN :start_date AND :end_date) OR ((start_date <= :start_date) AND (due_date >= :end_date))", {
+          :start_date => vacation_range.start_date, 
+          :end_date => vacation_range.end_date}]
+        }
+      }
+      
+      named_scope :with_author, lambda{ |user_id|
+        {
+          :conditions => {:author_id => user_id}
+        }
+      }
+      
+      named_scope :with_assigned_to, lambda{ |user_id|
+        {
+          :conditions => {:assigned_to_id => user_id}
+        }
+      }
     end
 
   end
@@ -16,19 +35,22 @@ module VacationIssuePatch
   end
   
   module InstanceMethods
-    def not_vacation
+    def assigned_to_on_vacation
       if vacation = Vacation.find_by_user_id(self.assigned_to_id)
-        check_vacation_dates vacation.active_planned_vacation
-        check_vacation_dates vacation.last_planned_vacation
-        check_vacation_dates vacation.not_planned_vacation
+        if on_vacation?(vacation.active_planned_vacation) ||
+            on_vacation?(vacation.last_planned_vacation) ||
+            on_vacation?(vacation.not_planned_vacation)
+        
+          errors.add :assigned_to_id, :on_vacation, 
+            :from => vacation_range.start_date, 
+            :to => vacation_range.end_date
+        end
       end
     end
     
-    def check_vacation_dates(vacation_range)
-      if vacation_range.present? && 
+    def on_vacation?(vacation_range)
+      vacation_range.present? && 
           vacation_range.in_range?(self.start_date, self.due_date)
-        errors.add :assigned_to_id, :is_vacation, :from => vacation_range.start_date, :to => vacation_range.end_date
-      end
     end
   end
 end

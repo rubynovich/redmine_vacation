@@ -14,6 +14,9 @@ ru:
   field_not_planned_vacation: "Последний прогул"
   field_is_planned: "Плановый"
   
+  text_author_on_vacation: "%{author}, автор задачи %{issue}, уходит в отпуск с %{vacation_start} по %{vacation_end}"
+  text_assigned_to_on_vacation: "%{assigned_to}, исполнитель задачи %{issue}, уходит в отпуск с %{vacation_start} по %{vacation_end}"
+  
   label_next_week: "на следующей неделе"  
   label_prev_week: "на прошлой неделе"
   label_next_month: "следующий месяц"
@@ -26,4 +29,4 @@ ru:
         issue:
           attributes:
             assigned_to_id:
-              is_vacation: сотруднику, который находится в отпуске c %{from} по %{to}
+              on_vacation: сотруднику, который находится в отпуске c %{from} по %{to}
