@@ -8,7 +8,7 @@ class VacationRange < ActiveRecord::Base
   after_save :change_vacation
   
   validates_presence_of :user_id, :start_date, :vacation_status_id
-  validate :dates_is_range
+  validate :dates_in_row
 
   named_scope :limit, lambda {|limit|
       {:limit => limit}
@@ -114,7 +114,7 @@ class VacationRange < ActiveRecord::Base
     end
   end
   
-  def dates_is_range
+  def dates_in_row
     if self.end_date.present? and self.start_date > self.end_date
       errors.add :end_date, :invalid
     end
@@ -123,6 +123,13 @@ class VacationRange < ActiveRecord::Base
   def include?(date)
     (self.start_date <= date) && (self.end_date >= date)
   end
+  
+  def in_range?(start, ending)
+    ending ||= start
+    self.include?(start) || self.include?(ending) ||
+      (start <= self.start_date && ending >= self.end_date)
+  end
+
   
   def change_vacation
     vacation = Vacation.find_by_user_id(user_id) || Vacation.create(:user_id => user_id)

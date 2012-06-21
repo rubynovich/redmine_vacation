@@ -26,4 +26,4 @@ ru:
         issue:
           attributes:
             assigned_to_id:
-              is_vacation: сотруднику, который находится в отпуске
+              is_vacation: сотруднику, который находится в отпуске c %{from} по %{to}
