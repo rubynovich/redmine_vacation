@@ -156,12 +156,12 @@ class VacationRange < ActiveRecord::Base
   end
   
   def send_notifications
-    Issue.with_author(self.user_id).open.on_vacation(self).all.each{ |issue|
-      VacationMailer.deliver_notification_from_author(issue, self)
-    }
-    
-    Issue.with_assigned_to(self.user_id).open.on_vacation(self).all.each{ |issue|
-      VacationMailer.deliver_notification_from_assigned_to(issue, self)
-    }
+#    Issue.with_author(self.user_id).open.on_vacation(self).all.each{ |issue|
+#      VacationMailer.deliver_notification_from_author(issue, self)
+#    }
+#    
+#    Issue.with_assigned_to(self.user_id).open.on_vacation(self).all.each{ |issue|
+#      VacationMailer.deliver_notification_from_assigned_to(issue, self)
+#    }
   end
 end

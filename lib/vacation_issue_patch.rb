@@ -37,9 +37,9 @@ module VacationIssuePatch
   module InstanceMethods
     def assigned_to_on_vacation
       if vacation = Vacation.find_by_user_id(self.assigned_to_id)
-        if on_vacation?(vacation.active_planned_vacation) ||
-            on_vacation?(vacation.last_planned_vacation) ||
-            on_vacation?(vacation.not_planned_vacation)
+        if on_vacation?(vacation_range = vacation.active_planned_vacation) ||
+            on_vacation?(vacation_range = vacation.last_planned_vacation) ||
+            on_vacation?(vacation_range = vacation.not_planned_vacation)
         
           errors.add :assigned_to_id, :on_vacation, 
             :from => vacation_range.start_date, 
