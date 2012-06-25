@@ -17,6 +17,11 @@ ru:
   text_author_on_vacation: "%{author}, автор задачи %{issue}, уходит в отпуск с %{vacation_start} по %{vacation_end}"
   text_assigned_to_on_vacation: "%{assigned_to}, исполнитель задачи %{issue}, уходит в отпуск с %{vacation_start} по %{vacation_end}"
   
+  mail_subject_vacation_from_author: "Автор %{user} в отпуске с %{vacation_start} по %{vacation_end}"
+  mail_subject_vacation_from_assigned_to: "Исполнитель %{user} в отпуске с %{vacation_start} по %{vacation_end}"
+  mail_body_vacation_from_author: "Автор %{user} находится в отпуске с %{vacation_start} по %{vacation_end}. Убедительная просьба учитывать это при выполнении следущих задач:"
+  mail_body_vacation_from_assigned_to: "Исполнитель %{user} находится в отпуске с %{vacation_start} по %{vacation_end}. Убедительная просьба учитывать это при принятии следущих задач:"
+  
   label_next_week: "на следующей неделе"  
   label_prev_week: "на прошлой неделе"
   label_next_month: "следующий месяц"

@@ -1,0 +1,5 @@
+= l(:mail_body_vacation_from_author, :user => @user.name, :vacation_start => @vacation.start_date, :vacation_end => @vacation.end_date )
+
+- @issues.each do |issue|
+  = "* #{issue.project} - #{issue.tracker} ##{issue.id}: #{issue.subject}"
+

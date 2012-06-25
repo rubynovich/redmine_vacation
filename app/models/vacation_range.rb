@@ -155,13 +155,26 @@ class VacationRange < ActiveRecord::Base
     )
   end
   
-  def send_notifications
-#    Issue.with_author(self.user_id).open.on_vacation(self).all.each{ |issue|
-#      VacationMailer.deliver_notification_from_author(issue, self)
-#    }
-#    
-#    Issue.with_assigned_to(self.user_id).open.on_vacation(self).all.each{ |issue|
-#      VacationMailer.deliver_notification_from_assigned_to(issue, self)
-#    }
+  def send_notifications    
+    issues_author = Issue.with_author(self.user_id).open.
+      on_vacation(self).all.inject({}){ |result,issue|
+        if issue.assigned_to.present?
+          result.update(issue.assigned_to => [issue]){|k,o,n| o+n }\
+        else
+          result
+        end
+      }.each{ |assigned_to, issues|
+        VacationMailer.deliver_from_author(assigned_to, issues, self, self.user)
+      }
+    issues_assigned_to = Issue.with_assigned_to(self.user_id).open.
+      on_vacation(self).all.inject({}){ |result,issue|
+        if issue.author.present?
+          result.update(issue.author => [issue]){|k,o,n| o+n }
+        else
+          result
+        end
+      }.each{ |author, issues|
+        VacationMailer.deliver_from_assigned_to(author, issues, self, self.user)
+      }
   end
 end
