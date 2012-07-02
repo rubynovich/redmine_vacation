@@ -42,8 +42,8 @@ module VacationIssuePatch
             on_vacation?(vacation_range = vacation.not_planned_vacation)
         
           errors.add :assigned_to_id, :on_vacation, 
-            :from => vacation_range.start_date, 
-            :to => vacation_range.end_date
+            :from => vacation_range.start_date.strftime("%d.%m.%Y"), 
+            :to => vacation_range.end_date.strftime("%d.%m.%Y")
         end
       end
     end

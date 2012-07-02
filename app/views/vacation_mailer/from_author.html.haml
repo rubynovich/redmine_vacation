@@ -1,4 +1,4 @@
-%p= l(:mail_body_vacation_from_author, :user => @user.name, :vacation_start => @vacation.start_date, :vacation_end => @vacation.end_date )
+%p= l(:mail_body_vacation_from_author, :user => @user.name, :vacation_start => @vacation.start_date.strftime("%d.%m.%Y"), :vacation_end => @vacation.end_date.strftime("%d.%m.%Y") )
 
 %ul
   - @issues.each do |issue|

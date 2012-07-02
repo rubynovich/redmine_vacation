@@ -7,8 +7,8 @@ class VacationMailer < Mailer
     author ||= vacation.user
     subject l(:mail_subject_vacation_from_author, 
       :user => author.name, 
-      :vacation_start => vacation.start_date, 
-      :vacation_end => vacation.end_date)
+      :vacation_start => vacation.start_date.strftime("%d.%m.%Y"), 
+      :vacation_end => vacation.end_date.strftime("%d.%m.%Y"))
     body :user => author, 
          :issues => issues,
          :vacation => vacation
@@ -21,8 +21,8 @@ class VacationMailer < Mailer
     assigned_to ||= vacation.user
     subject l(:mail_subject_vacation_from_assigned_to, 
       :user => assigned_to.name, 
-      :vacation_start => vacation.start_date, 
-      :vacation_end => vacation.end_date)
+      :vacation_start => vacation.start_date.strftime("%d.%m.%Y"), 
+      :vacation_end => vacation.end_date.strftime("%d.%m.%Y"))
     body :user => assigned_to, 
          :issues => issues,
          :vacation => vacation
