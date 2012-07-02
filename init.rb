@@ -12,7 +12,7 @@ Redmine::Plugin.register :redmine_vacation do
   name 'Redmine Vacation plugin'
   author 'Roman Shipiev'
   description 'Makes it impossible issue assignment the employee is on vacation'
-  version '0.1.0'
+  version '0.1.1'
   url 'http://github.com/rubynovich/redmine_vacation'
   author_url 'http://roman.shipiev.me'
 

@@ -1,26 +1,26 @@
 # Russian strings go here for Rails i18n
 ru:
-  label_vacation_status_plural: "Причины отпуска"
-  label_vacation_status_new: "Новая причина отпуска"
-  label_vacation_range_plural: "Отпуска"
-  label_vacation_range_new: "Новый отпуск"
+  label_vacation_status_plural: "Причины отсутствия"
+  label_vacation_status_new: "Новая причина отсутствия"
+  label_vacation_range_plural: "Отсутствия"
+  label_vacation_range_new: "Новое отсутствие"
   label_vacation_plural: "Сотрудники"
   label_vacation_manager_plural: "Отпуск-менеджеры"
-  field_vacation_status: "Причина отпуска"
+  field_vacation_status: "Причина отсутствия"
   field_vacation_start_date: "Дата начала"
   field_vacation_end_date: "Дата окончания"
-  field_last_planned_vacation: "Предыдущий отпуск"  
-  field_active_planned_vacation: "Следующий отпуск"
-  field_not_planned_vacation: "Последний прогул"
+  field_last_planned_vacation: "Предыдущий плановый отпуск"  
+  field_active_planned_vacation: "Следующий плановый отпуск"
+  field_not_planned_vacation: "Последнее внеплановое отсутствие"
   field_is_planned: "Плановый"
   
-  text_author_on_vacation: "%{author}, автор задачи %{issue}, уходит в отпуск с %{vacation_start} по %{vacation_end}"
-  text_assigned_to_on_vacation: "%{assigned_to}, исполнитель задачи %{issue}, уходит в отпуск с %{vacation_start} по %{vacation_end}"
+  text_author_on_vacation: "%{author}, автор задачи %{issue}, отсутствует с %{vacation_start} по %{vacation_end}"
+  text_assigned_to_on_vacation: "%{assigned_to}, исполнитель задачи %{issue}, отсутствует с %{vacation_start} по %{vacation_end}"
   
-  mail_subject_vacation_from_author: "Автор %{user} в отпуске с %{vacation_start} по %{vacation_end}"
-  mail_subject_vacation_from_assigned_to: "Исполнитель %{user} в отпуске с %{vacation_start} по %{vacation_end}"
-  mail_body_vacation_from_author: "Автор %{user} находится в отпуске с %{vacation_start} по %{vacation_end}. Убедительная просьба учитывать это при выполнении следущих задач:"
-  mail_body_vacation_from_assigned_to: "Исполнитель %{user} находится в отпуске с %{vacation_start} по %{vacation_end}. Убедительная просьба учитывать это при принятии следущих задач:"
+  mail_subject_vacation_from_author: "Автор %{user} отсутствует с %{vacation_start} по %{vacation_end}"
+  mail_subject_vacation_from_assigned_to: "Исполнитель %{user} отсутствует с %{vacation_start} по %{vacation_end}"
+  mail_body_vacation_from_author: "Автор %{user} отсутствует с %{vacation_start} по %{vacation_end}. Убедительная просьба учитывать это при выполнении следущих задач:"
+  mail_body_vacation_from_assigned_to: "Исполнитель %{user} отсутствует с %{vacation_start} по %{vacation_end}. Убедительная просьба учитывать это при принятии следущих задач:"
   
   label_next_week: "на следующей неделе"  
   label_prev_week: "на прошлой неделе"
@@ -34,4 +34,4 @@ ru:
         issue:
           attributes:
             assigned_to_id:
-              on_vacation: сотруднику, который находится в отпуске c %{from} по %{to}
+              on_vacation: сотруднику, который отсутствует c %{from} по %{to}
