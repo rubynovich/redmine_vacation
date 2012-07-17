@@ -55,9 +55,13 @@
       =sort_header_tag :end_date, :caption => l(:field_vacation_end_date)     
       %th
   %tbody
-    - for vacation_range in @vacation_ranges
+    - @vacation_ranges.each do |vacation_range|
       %tr{:class=>cycle("odd", "even")}
-        %td= link_to h(vacation_range.user), vacation_path(Vacation.find_by_user_id(vacation_range.user_id))
+        %td
+          - unless vacation = Vacation.find_by_user_id(vacation_range.user_id)
+            = link_to h(vacation_range.user), vacation_path(vacation)
+          - else 
+            = link_to h(vacation_range.user)
         %td= link_to h(vacation_range.vacation_status.name), vacation_status_path(vacation_range.vacation_status)
         %td{:align=>"center"}= format_date(vacation_range.start_date)
         %td{:align=>"center"}= format_date(vacation_range.end_date)

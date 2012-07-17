@@ -28,5 +28,5 @@ Makes it impossible issue assignment the employee is on vacation
 
 == Remove
 
-  rake db:migrate:plugins NAME=redmine_vacation VERSION=0 RAILS_ENV=production
+  rake db:migrate:plugin NAME=redmine_vacation VERSION=0 RAILS_ENV=production
   ./script/plugin remove redmine_vacation
