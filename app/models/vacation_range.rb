@@ -133,8 +133,8 @@ class VacationRange < ActiveRecord::Base
   
   def in_range?(start, ending)
     ending ||= start
-    self.include?(start) || self.include?(ending) ||
-      (start <= self.start_date && ending >= self.end_date)
+    self.include?(start) || self.include?(ending) 
+      #|| (start <= self.start_date && ending >= self.end_date)
   end
 
   
