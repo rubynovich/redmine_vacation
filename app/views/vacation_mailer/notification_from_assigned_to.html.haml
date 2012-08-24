@@ -1,3 +1,0 @@
-= l(:text_assigned_to_on_vacation, :assigned_to => h(@issue.assigned_to), :issue => "##{@issue.id}", :vacation_start => @vacation.start_date, :vacation_end => @vacation.end_date)
-%hr
-= render :partial => "issue.html.haml", :locals => { :issue => @issue, :issue_url => @issue_url }
