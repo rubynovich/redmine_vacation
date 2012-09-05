@@ -170,7 +170,7 @@ class VacationRange < ActiveRecord::Base
           result
         end
       }.each{ |assigned_to, issues|
-        VacationMailer.deliver_from_author(assigned_to, issues, self, self.user)
+        VacationMailer.delay.deliver_from_author(assigned_to, issues, self, self.user)
       }
     issues_assigned_to = Issue.with_assigned_to(self.user_id).open.
       on_vacation(self).all.inject({}){ |result,issue|
@@ -180,7 +180,7 @@ class VacationRange < ActiveRecord::Base
           result
         end
       }.each{ |author, issues|
-        VacationMailer.deliver_from_assigned_to(author, issues, self, self.user)
+        VacationMailer.delay.deliver_from_assigned_to(author, issues, self, self.user)
       }
   end
 end
