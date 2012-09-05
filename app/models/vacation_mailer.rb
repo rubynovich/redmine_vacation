@@ -1,30 +1,34 @@
 class VacationMailer < Mailer
   unloadable
 
-  def from_author(user, issues, vacation, author=nil)
+  def from_author(user_id, issue_ids, vacation_range_id, author_id=nil)
+    user = User.find(user_id)
     set_language_if_valid user.language
     recipients user.mail
-    author ||= vacation.user
+    author = author_id && User.find(author_id) || vacation.user
+    vacation = VacationRange.find(vacation_range_id)    
     subject l(:mail_subject_vacation_from_author, 
       :user => author.name, 
       :vacation_start => vacation.start_date.strftime("%d.%m.%Y"), 
       :vacation_end => vacation.end_date.strftime("%d.%m.%Y"))
     body :user => author, 
-         :issues => issues,
+         :issues => Issue.find(issue_ids),
          :vacation => vacation
     render_multipart('from_author', body)
   end
 
-  def from_assigned_to(user, issues, vacation, assigned_to=nil)
+  def from_assigned_to(user_id, issue_ids, vacation_range_id, assigned_to_id=nil)
+    user = User.find(user_id) 
     set_language_if_valid user.language
     recipients user.mail
-    assigned_to ||= vacation.user
+    assigned_to = assigned_to_id && User.find(assigned_to_id) || vacation.user
+    vacation = VacationRange.find(vacation_range_id)
     subject l(:mail_subject_vacation_from_assigned_to, 
       :user => assigned_to.name, 
       :vacation_start => vacation.start_date.strftime("%d.%m.%Y"), 
       :vacation_end => vacation.end_date.strftime("%d.%m.%Y"))
     body :user => assigned_to, 
-         :issues => issues,
+         :issues => Issue.find(issue_ids),
          :vacation => vacation
     render_multipart('from_assigned_to', body)
   end

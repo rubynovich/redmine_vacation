@@ -165,22 +165,27 @@ class VacationRange < ActiveRecord::Base
     issues_author = Issue.with_author(self.user_id).open.
       on_vacation(self).all.inject({}){ |result,issue|
         if issue.assigned_to.present?
-          result.update(issue.assigned_to => [issue]){|k,o,n| o+n }\
+          result.update(issue.assigned_to_id => [issue.id]){|k,o,n| o+n }\
         else
           result
         end
-      }.each{ |assigned_to, issues|
-        VacationMailer.delay.deliver_from_author(assigned_to, issues, self, self.user)
       }
     issues_assigned_to = Issue.with_assigned_to(self.user_id).open.
       on_vacation(self).all.inject({}){ |result,issue|
         if issue.author.present?
-          result.update(issue.author => [issue]){|k,o,n| o+n }
+          result.update(issue.author_id => [issue.id]){|k,o,n| o+n }
         else
           result
         end
-      }.each{ |author, issues|
-        VacationMailer.delay.deliver_from_assigned_to(author, issues, self, self.user)
       }
+    
+    ActiveRecord::Base.transaction do  
+      issues_author.each{ |assigned_to, issues|
+        VacationMailer.delay.deliver_from_author(assigned_to, issues, self.id, self.user_id)
+      }
+      issues_assigned_to.each{ |author, issues|
+        VacationMailer.delay.deliver_from_assigned_to(author, issues, self.id, self.user_id)
+      }
+    end
   end
 end
