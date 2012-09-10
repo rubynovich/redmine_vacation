@@ -1,2 +1,2 @@
 gem "haml"
-gem "delayed_job", "~>2.0.4"
+#gem "delayed_job", "~>2.0.4"
