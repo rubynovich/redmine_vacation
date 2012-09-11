@@ -27,7 +27,9 @@
     %tbody
       - @vacations.each do |vacation|
         %tr{:class=>cycle("odd", "even")}
-          %td= link_to h(vacation.user), vacation_path(vacation)
+          %td
+            = avatar vacation.user, :size => "14"
+            = link_to_user vacation.user
           %td{:align=>"center"}
             -if vacation.last_planned_vacation.present?
               = link_to(h(vacation.last_planned_vacation), edit_vacation_range_path(vacation.last_planned_vacation))
