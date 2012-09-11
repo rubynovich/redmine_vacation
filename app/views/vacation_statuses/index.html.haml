@@ -3,25 +3,29 @@
 
 %h2=l(:label_vacation_status_plural)
 
-%table.list
-  %thead
-    %tr
-      %th=l(:field_vacation_status)
-      %th=l(:field_is_default)
-      %th=l(:field_is_planned)     
-      %th
-  %tbody
-    - for vacation_status in @vacation_statuses
-      %tr{:class=>cycle("odd", "even")}
-        %td
-          = link_to h(vacation_status.name), vacation_status_path(vacation_status)
-          = "(#{vacation_status.vacation_ranges.count})"
-        %td{:align=>"center"}= checked_image vacation_status.is_default?
-        %td{:align=>"center"}= checked_image vacation_status.is_planned?        
-        %td.buttons
-          = link_to l(:button_update), {:action => 'edit', :id => vacation_status.id}, :class => 'icon icon-edit'
-          = link_to(l(:button_delete), vacation_status_path(vacation_status), :method => :delete, :confirm => l(:text_are_you_sure), :class => 'icon icon-del')
+- if @vacation_statuses.any?
+  %table.list
+    %thead
+      %tr
+        %th=l(:field_vacation_status)
+        %th=l(:field_is_default)
+        %th=l(:field_is_planned)     
+        %th
+    %tbody
+      - @vacation_statuses.each do |vacation_status|
+        %tr{:class=>cycle("odd", "even")}
+          %td
+            = link_to h(vacation_status.name), vacation_status_path(vacation_status)
+            = "(#{vacation_status.vacation_ranges.count})"
+          %td{:align=>"center"}= checked_image vacation_status.is_default?
+          %td{:align=>"center"}= checked_image vacation_status.is_planned?        
+          %td.buttons
+            = link_to l(:button_update), {:action => 'edit', :id => vacation_status.id}, :class => 'icon icon-edit'
+            = link_to(l(:button_delete), vacation_status_path(vacation_status), :method => :delete, :confirm => l(:text_are_you_sure), :class => 'icon icon-del')
 
-%p.pagination= pagination_links_full @vacation_status_pages
+  %p.pagination= pagination_links_full @vacation_status_pages
+- else
+  %p.nodata
+    = l(:label_no_data)
 
 - html_title(l(:label_vacation_status_plural))

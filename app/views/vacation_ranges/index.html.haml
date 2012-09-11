@@ -45,7 +45,7 @@
    
 &nbsp;
 
-
+- if @vacation_ranges.any?
 %table.list
   %thead
     %tr
@@ -70,5 +70,8 @@
           = link_to(l(:button_delete), vacation_range_path(vacation_range), :method => :delete, :confirm => l(:text_are_you_sure), :class => 'icon icon-del')
 
 %p.pagination= pagination_links_full @vacation_range_pages, @vacation_ranges_count
+- else
+  %p.nodata
+    = l(:label_no_data)
 
 - html_title(l(:label_vacation_range_plural))

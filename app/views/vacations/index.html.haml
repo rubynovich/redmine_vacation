@@ -15,31 +15,34 @@
             
 &nbsp;
 
+- if @vacations.any?
+  %table.list
+    %thead
+      %tr
+        %th=l(:field_user)
+        %th=l(:field_last_planned_vacation)
+        %th=l(:field_active_planned_vacation)
+        %th=l(:field_not_planned_vacation)
+        %th
+    %tbody
+      - @vacations.each do |vacation|
+        %tr{:class=>cycle("odd", "even")}
+          %td= link_to h(vacation.user), vacation_path(vacation)
+          %td{:align=>"center"}
+            -if vacation.last_planned_vacation.present?
+              = link_to(h(vacation.last_planned_vacation), edit_vacation_range_path(vacation.last_planned_vacation))
+          %td{:align=>"center"}
+            - if vacation.active_planned_vacation.present?
+              = link_to(h(vacation.active_planned_vacation), edit_vacation_range_path(vacation.active_planned_vacation))
+          %td{:align=>"center"}
+            - if vacation.not_planned_vacation.present?
+              = link_to(h(vacation.not_planned_vacation), edit_vacation_range_path(vacation.not_planned_vacation))
+          %td.buttons
+            = link_to(l(:button_delete), vacation_path(vacation), :method => :delete, :confirm => l(:text_are_you_sure), :class => 'icon icon-del')
 
-%table.list
-  %thead
-    %tr
-      %th=l(:field_user)
-      %th=l(:field_last_planned_vacation)
-      %th=l(:field_active_planned_vacation)
-      %th=l(:field_not_planned_vacation)
-      %th
-  %tbody
-    - for vacation in @vacations
-      %tr{:class=>cycle("odd", "even")}
-        %td= link_to h(vacation.user), vacation_path(vacation)
-        %td{:align=>"center"}
-          -if vacation.last_planned_vacation.present?
-            = link_to(h(vacation.last_planned_vacation), edit_vacation_range_path(vacation.last_planned_vacation))
-        %td{:align=>"center"}
-          - if vacation.active_planned_vacation.present?
-            = link_to(h(vacation.active_planned_vacation), edit_vacation_range_path(vacation.active_planned_vacation))
-        %td{:align=>"center"}
-          - if vacation.not_planned_vacation.present?
-            = link_to(h(vacation.not_planned_vacation), edit_vacation_range_path(vacation.not_planned_vacation))
-        %td.buttons
-          = link_to(l(:button_delete), vacation_path(vacation), :method => :delete, :confirm => l(:text_are_you_sure), :class => 'icon icon-del')
-
-%p.pagination= pagination_links_full @vacation_pages, @vacations_count
+  %p.pagination= pagination_links_full @vacation_pages, @vacations_count
+- else
+  %p.nodata
+    = l(:label_no_data)
 
 - html_title(l(:label_vacation_plural))
