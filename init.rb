@@ -2,17 +2,19 @@ require 'redmine'
 require 'dispatcher'
 require 'vacation_user_patch'
 require 'vacation_issue_patch'
+require 'vacation_issues_controller_patch'
 
 Dispatcher.to_prepare do
   User.send(:include, VacationUserPatch) unless User.include? VacationUserPatch
   Issue.send(:include, VacationIssuePatch) unless Issue.include? VacationIssuePatch
+  IssuesController.send(:include, VacationIssuesControllerPatch) unless IssuesController.include? VacationIssuesControllerPatch 
 end
 
 Redmine::Plugin.register :redmine_vacation do
   name 'Redmine Vacation plugin'
   author 'Roman Shipiev'
   description 'Makes it impossible issue assignment the employee is on vacation'
-  version '0.1.1'
+  version '0.1.3'
   url 'http://github.com/rubynovich/redmine_vacation'
   author_url 'http://roman.shipiev.me'
 

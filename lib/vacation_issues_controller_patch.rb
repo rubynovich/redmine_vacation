@@ -1,0 +1,32 @@
+require_dependency 'issues_controller'
+
+module VacationIssuesControllerPatch
+  def self.included(base)
+    base.extend(ClassMethods)
+    
+    base.send(:include, InstanceMethods)
+    
+    base.class_eval do
+      before_filter :warning_flash, :only => [:create, :update]
+    end
+
+  end
+    
+  module ClassMethods
+  end
+  
+  module InstanceMethods
+    def warning_flash
+      assigned_to_id = params[:issue][:assigned_to_id]
+      if (vacation = Vacation.find_by_user_id(assigned_to_id))&&
+        (vacation_range = vacation.active_planned_vacation)&&
+        (vacation_range.start_date > Date.today)        
+        
+        flash[:warning] = t(:vacation_warning_flash,
+          :name => User.find(assigned_to_id).name,
+          :from => vacation_range.start_date.strftime("%d.%m.%Y"), 
+          :to => vacation_range.end_date.strftime("%d.%m.%Y"))
+      end
+    end
+  end
+end

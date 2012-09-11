@@ -9,12 +9,12 @@ module VacationIssuePatch
     base.class_eval do
       validate :assigned_to_on_vacation
       
-      named_scope :on_vacation, lambda{ |vacation_range|
-        { :conditions => ["(start_date BETWEEN :start_date AND :end_date) OR (due_date BETWEEN :start_date AND :end_date) OR ((start_date <= :start_date) AND (due_date >= :end_date))", {
-          :start_date => vacation_range.start_date, 
-          :end_date => vacation_range.end_date}]
-        }
-      }
+#      named_scope :on_vacation, lambda{ |vacation_range|
+#        { :conditions => ["(start_date BETWEEN :start_date AND :end_date) OR (due_date BETWEEN :start_date AND :end_date) OR ((start_date <= :start_date) AND (due_date >= :end_date))", {
+#          :start_date => vacation_range.start_date, 
+#          :end_date => vacation_range.end_date}]
+#        }
+#      }            
       
       named_scope :with_author, lambda{ |user_id|
         {
@@ -40,7 +40,7 @@ module VacationIssuePatch
         if on_vacation?(vacation_range = vacation.active_planned_vacation) ||
             on_vacation?(vacation_range = vacation.last_planned_vacation) ||
             on_vacation?(vacation_range = vacation.not_planned_vacation)
-        
+                    
           errors.add :assigned_to_id, :on_vacation, 
             :from => vacation_range.start_date.strftime("%d.%m.%Y"), 
             :to => vacation_range.end_date.strftime("%d.%m.%Y")

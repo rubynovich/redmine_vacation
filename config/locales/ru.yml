@@ -21,6 +21,8 @@ ru:
   mail_subject_vacation_from_assigned_to: "Исполнитель %{user} отсутствует с %{vacation_start} по %{vacation_end}"
   mail_body_vacation_from_author: "Автор %{user} отсутствует с %{vacation_start} по %{vacation_end}. Прошу учесть это при выполнении следущих задач:"
   mail_body_vacation_from_assigned_to: "Исполнитель %{user} отсутствует с %{vacation_start} по %{vacation_end}. Прошу учесть это при принятии следущих задач:"
+
+  vacation_warning_flash: Обратите внимание, что %{name} отсутствует c %{from} по %{to}
   
   label_next_week: "на следующей неделе"  
   label_prev_week: "на прошлой неделе"
