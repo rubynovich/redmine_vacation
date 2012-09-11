@@ -145,14 +145,12 @@ class VacationRange < ActiveRecord::Base
       planned_vacations.
       for_user(user_id).
       limit(2).
-      order_by_start_date("DESC").
-      all
+      all(:order => "start_date DESC, end_date DESC")
     
     not_planned = VacationRange.
       not_planned_vacations.
       for_user(user_id).
-      order_by_start_date("DESC").
-      first
+      first(:order => "start_date DESC, end_date DESC")
     
     vacation.update_attributes(
       :last_planned_vacation => last_planned,
