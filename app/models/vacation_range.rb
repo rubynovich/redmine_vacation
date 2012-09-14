@@ -11,6 +11,12 @@ class VacationRange < ActiveRecord::Base
   validates_presence_of :user_id, :start_date, :vacation_status_id
   validate :dates_in_row
 
+  def title_description
+    if description.present?
+      description.gsub(/\r\n/,"\r")
+    end
+  end
+
   named_scope :limit, lambda {|limit|
       {:limit => limit}
   }

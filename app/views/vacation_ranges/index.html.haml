@@ -58,11 +58,11 @@
     - @vacation_ranges.each do |vacation_range|
       %tr{:class=>cycle("odd", "even")}
         %td
-          - unless vacation = Vacation.find_by_user_id(vacation_range.user_id)
+          - if vacation = Vacation.find_by_user_id(vacation_range.user_id)
             = link_to h(vacation_range.user), vacation_path(vacation)
           - else 
             = h(vacation_range.user)
-        %td= link_to h(vacation_range.vacation_status.name), vacation_status_path(vacation_range.vacation_status)
+        %td= link_to h(vacation_range.vacation_status.name), vacation_status_path(vacation_range.vacation_status), :title => vacation_range.title_description
         %td{:align=>"center"}= format_date(vacation_range.start_date)
         %td{:align=>"center"}= format_date(vacation_range.end_date)
         %td.buttons
