@@ -2,7 +2,7 @@ require 'redmine'
 require 'dispatcher'
 require 'vacation_user_patch'
 require 'vacation_issue_patch'
-require 'vacation_issues_controller_hooks'
+#require 'vacation_issues_controller_hooks'
 
 Dispatcher.to_prepare do
   User.send(:include, VacationUserPatch) unless User.include? VacationUserPatch
