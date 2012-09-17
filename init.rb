@@ -2,11 +2,12 @@ require 'redmine'
 require 'dispatcher'
 require 'vacation_user_patch'
 require 'vacation_issue_patch'
-#require 'vacation_issues_controller_hooks'
+require 'vacation_issues_controller_patch'
 
 Dispatcher.to_prepare do
   User.send(:include, VacationUserPatch) unless User.include? VacationUserPatch
   Issue.send(:include, VacationIssuePatch) unless Issue.include? VacationIssuePatch
+  IssuesController.send(:include, VacationIssuesControllerPatch) unless IssuesController.include? VacationIssuesControllerPatch
 end
 
 Redmine::Plugin.register :redmine_vacation do

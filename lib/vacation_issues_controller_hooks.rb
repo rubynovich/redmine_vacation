@@ -6,11 +6,12 @@ module RedmineVacation
         (vacation = Vacation.find_by_user_id(assigned_to_id))&&
         (vacation_range = vacation.active_planned_vacation)&&
         (vacation_range.start_date > Date.today)        
-        
+                
+        #FIXME flash don't work
         flash[:warning] = t(:vacation_warning_flash,
-          :name => User.find(assigned_to_id).name,
-          :from => vacation_range.start_date.strftime("%d.%m.%Y"), 
-          :to => vacation_range.end_date.strftime("%d.%m.%Y"))
+            :name => User.find(assigned_to_id).name,
+            :from => vacation_range.start_date.strftime("%d.%m.%Y"), 
+            :to => vacation_range.end_date.strftime("%d.%m.%Y"))
       end      
     end
     
