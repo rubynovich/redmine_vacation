@@ -11,18 +11,23 @@
     %tr
       =sort_header_tag :vacation_status_id, :caption => l(:field_vacation_status)
       =sort_header_tag :start_date, :caption => l(:field_vacation_start_date)
-      =sort_header_tag :end_date, :caption => l(:field_vacation_end_date)     
+      =sort_header_tag :end_date, :caption => l(:field_vacation_end_date)
       %th
   %tbody
     - for vacation_range in @vacation_ranges
       %tr{:class=>cycle("odd", "even")}
-        %td= link_to h(vacation_range.vacation_status.name), vacation_status_path(vacation_range.vacation_status)
+        %td= link_to h(vacation_range.vacation_status.name), vacation_status_path(vacation_range.vacation_status), :title => vacation_range.description
         %td{:align=>"center"}= format_date(vacation_range.start_date)
         %td{:align=>"center"}= format_date(vacation_range.end_date)
         %td.buttons
           = link_to l(:button_update), {:action => 'edit', :controller => 'vacation_ranges', :id => vacation_range.id}, :class => 'icon icon-edit'
           = link_to(l(:button_delete), vacation_range_path(vacation_range), :method => :delete, :confirm => l(:text_are_you_sure), :class => 'icon icon-del')
 
-%p.pagination= pagination_links_full @vacation_range_pages, @vacation_ranges_count
+%p.pagination
+  = pagination_links_full @vacation_range_pages, @vacation_ranges_count
+
+%p.other-formats
+  = l(:label_export_to)
+  = link_to 'CSV', params.merge(:format => :csv)
 
 - html_title(l(:label_vacation_range_plural))

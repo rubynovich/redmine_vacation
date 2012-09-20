@@ -4,6 +4,8 @@ class VacationRangesController < ApplicationController
 
   helper :sort
   include SortHelper
+  helper :vacation_ranges
+  include VacationRangesHelper
 
   # GET /vacation_ranges/
   def index
@@ -13,17 +15,21 @@ class VacationRangesController < ApplicationController
     
     @limit = per_page_option
     
-    scope = VacationRange.time_period(params[:time_period_start], :start_date).
+    @scope = VacationRange.time_period(params[:time_period_start], :start_date).
       time_period(params[:time_period_end], :end_date).
       for_vacation_status(params[:vacation_status_id])
     
-    @vacation_ranges_count = scope.count
+    @vacation_ranges_count = @scope.count
     @vacation_range_pages = Paginator.new self, @vacation_ranges_count, @limit, params[:page]
     @offset ||= @vacation_range_pages.current.offset
-    @vacation_ranges =  scope.find  :all,
+    @vacation_ranges =  @scope.find  :all,
                                   :order => sort_clause,
                                   :limit  =>  @limit,
                                   :offset =>  @offset
+    respond_to do |format|
+      format.html{ render :action => :index }
+      format.csv{ send_data(index_to_csv, :type => 'text/csv; header=present', :filename => Date.today.strftime("vacation_ranges_%Y-%m-%d.csv")) }
+    end
   end
 
   # GET /vacation_ranges/new
