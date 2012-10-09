@@ -17,7 +17,8 @@ class VacationRangesController < ApplicationController
     
     @scope = VacationRange.time_period(params[:time_period_start], :start_date).
       time_period(params[:time_period_end], :end_date).
-      for_vacation_status(params[:vacation_status_id])
+      for_vacation_status(params[:vacation_status_id]).
+      like_username(params[:name])
     
     @vacation_ranges_count = @scope.count
     @vacation_range_pages = Paginator.new self, @vacation_ranges_count, @limit, params[:page]

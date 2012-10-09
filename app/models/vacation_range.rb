@@ -36,6 +36,15 @@ class VacationRange < ActiveRecord::Base
     end
   }
   
+  named_scope :like_username, lambda {|q|
+    if q.present?
+      {:conditions => 
+        ["LOWER(users.firstname) LIKE :p OR users.firstname LIKE :p OR LOWER(users.lastname) LIKE :p OR users.lastname LIKE :p", 
+        {:p => "%#{q.to_s.downcase}%"}],
+       :include => :user}
+    end
+  }   
+  
   named_scope :for_vacation_status, lambda { |status|
     if status.present?
       {:conditions => 
