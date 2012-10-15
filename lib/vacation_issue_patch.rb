@@ -7,7 +7,10 @@ module VacationIssuePatch
     base.send(:include, InstanceMethods)
     
     base.class_eval do
-      validate :assigned_to_on_vacation
+      validate :assigned_to_on_vacation_create, :on => :create
+      validate :assigned_to_on_vacation_update, :on => :update
+      
+      attr_accessor :attributes_before_change
       
       named_scope :on_vacation, lambda{ |vacation_range|        
         { :conditions => ["(start_date BETWEEN :start_date AND :end_date) OR (due_date BETWEEN :start_date AND :end_date)", {
@@ -35,7 +38,7 @@ module VacationIssuePatch
   end
   
   module InstanceMethods
-    def assigned_to_on_vacation
+    def assigned_to_on_vacation_create
       if vacation = Vacation.find_by_user_id(self.assigned_to_id)
         if on_vacation?(vacation_range = vacation.active_planned_vacation) ||
             on_vacation?(vacation_range = vacation.last_planned_vacation) ||
@@ -47,7 +50,14 @@ module VacationIssuePatch
         end
       end
     end
-    
+
+    def assigned_to_on_vacation_update
+      if @attributes_before_change.present? && 
+        (@attributes_before_change['assigned_to_id'] != self.assigned_to_id)
+        assigned_to_on_vacation_create
+      end
+    end
+
     def on_vacation?(vacation_range)
       vacation_range.present? && 
           vacation_range.in_range?(self.start_date, self.due_date)

@@ -8,6 +8,7 @@ module VacationIssuesControllerPatch
     
     base.class_eval do
       before_filter :warning_flash, :only => [:create, :update]
+      before_filter :set_attributes_before_change, :only => [:update]
     end
 
   end
@@ -16,6 +17,10 @@ module VacationIssuesControllerPatch
   end
   
   module InstanceMethods
+    def set_attributes_before_change
+      @issue.attributes_before_change = @attributes_before_change
+    end
+    
     def warning_flash
       assigned_to_id = params[:issue][:assigned_to_id]
       if (vacation = Vacation.find_by_user_id(assigned_to_id))&&
