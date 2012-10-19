@@ -8,7 +8,7 @@ module VacationIssuePatch
     
     base.class_eval do
       validate :assigned_to_on_vacation_create, :on => :create
-      validate :assigned_to_on_vacation_update, :on => :update
+      #validate :assigned_to_on_vacation_update, :on => :update
       
       attr_accessor :attributes_before_change
       
