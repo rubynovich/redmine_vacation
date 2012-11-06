@@ -1,3 +1,4 @@
+require_dependency 'principal'
 require_dependency 'user'
 
 module VacationUserPatch
@@ -7,6 +8,8 @@ module VacationUserPatch
     base.send(:include, InstanceMethods)
     
     base.class_eval do
+      unloadable
+      
       named_scope :not_vacation_manager, lambda {
         { :conditions => ["#{User.table_name}.id NOT IN (SELECT vacation_managers.user_id FROM vacation_managers)"] }
       }    
