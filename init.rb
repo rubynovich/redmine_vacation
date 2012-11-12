@@ -1,20 +1,31 @@
 require 'redmine'
-require 'dispatcher'
-require 'vacation_user_patch'
-require 'vacation_issue_patch'
-require 'vacation_issues_controller_patch'
 
-Dispatcher.to_prepare do
-  User.send(:include, VacationUserPatch) unless User.include? VacationUserPatch
-  Issue.send(:include, VacationIssuePatch) unless Issue.include? VacationIssuePatch
-  IssuesController.send(:include, VacationIssuesControllerPatch) unless IssuesController.include? VacationIssuesControllerPatch
+if Rails::VERSION::MAJOR < 3
+  require 'dispatcher'
+  object_to_prepare = Dispatcher
+else
+  object_to_prepare = Rails.configuration
+end
+
+object_to_prepare.to_prepare do
+  [:user, :issue, :issues_controller].each do |cl|
+    require "vacation_#{cl}_patch"
+  end
+
+  [ 
+    [User, VacationPlugin::UserPatch],
+    [Issue, VacationPlugin::IssuePatch],
+    [IssuesController, VacationPlugin::IssuesControllerPatch],    
+  ].each do |cl, patch|
+    cl.send(:include, patch) unless cl.included_modules.include? patch
+  end
 end
 
 Redmine::Plugin.register :redmine_vacation do
-  name 'Redmine Vacation plugin'
+  name 'Отсутствия'
   author 'Roman Shipiev'
-  description 'Makes it impossible issue assignment the employee is on vacation'
-  version '0.1.3'
+  description 'Фиксирует отсуствия работников на рабочем месте и не позволяет назначить задачу отсутствующему сотруднику. Если задача поставляена, а сотрудник заявил об отсутствии, то рассылаются соответствующие уведомнения авторам и исполнителям этой задачи.'
+  version '0.1.4'
   url 'http://github.com/rubynovich/redmine_vacation'
   author_url 'http://roman.shipiev.me'
 
