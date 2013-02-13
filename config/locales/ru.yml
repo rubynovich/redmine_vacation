@@ -9,31 +9,31 @@ ru:
   field_vacation_status: "Причина отсутствия"
   field_vacation_start_date: "Дата начала"
   field_vacation_end_date: "Дата окончания"
-  field_last_planned_vacation: "Предыдущий плановый отпуск"  
+  field_last_planned_vacation: "Предыдущий плановый отпуск"
   field_active_planned_vacation: "Следующий плановый отпуск"
   field_not_planned_vacation: "Последнее внеплановое отсутствие"
   field_is_planned: "Плановый"
-  
+
   text_author_on_vacation: "%{author}, автор задачи %{issue}, отсутствует с %{vacation_start} по %{vacation_end}"
   text_assigned_to_on_vacation: "%{assigned_to}, исполнитель задачи %{issue}, отсутствует с %{vacation_start} по %{vacation_end}"
-  
+
   mail_subject_vacation_from_author: "Автор %{user} отсутствует с %{vacation_start} по %{vacation_end}"
   mail_subject_vacation_from_assigned_to: "Исполнитель %{user} отсутствует с %{vacation_start} по %{vacation_end}"
   mail_body_vacation_from_author: "Автор %{user} отсутствует с %{vacation_start} по %{vacation_end}. Прошу учесть это при выполнении следущих задач:"
   mail_body_vacation_from_assigned_to: "Исполнитель %{user} отсутствует с %{vacation_start} по %{vacation_end}. Прошу учесть это при принятии следущих задач:"
 
-  vacation_warning_flash: Обратите внимание, что %{name} отсутствует c %{from} по %{to}
-  
-  label_next_week: "на следующей неделе"  
+  vacation_warning_flash: "Обратите внимание, что %{name} отсутствует c %{from} по %{to}"
+
+  label_next_week: "на следующей неделе"
   label_prev_week: "на прошлой неделе"
   label_next_month: "следующий месяц"
-  label_prev_month: "прошлый месяц"  
+  label_prev_month: "прошлый месяц"
   label_next_year: "следующий год"
-  label_prev_year: "прошлый год"  
+  label_prev_year: "прошлый год"
   activerecord:
     errors:
       models:
         issue:
           attributes:
             assigned_to_id:
-              on_vacation: сотруднику, который отсутствует c %{from} по %{to}
+              on_vacation: "сотруднику, который отсутствует c %{from} по %{to}"

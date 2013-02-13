@@ -1,3 +1,39 @@
 # English strings go here for Rails i18n
 en:
-  my_label: "My label"
+  label_vacation_status_plural: "Vacation reasons"
+  label_vacation_status_new: "New vacation reason"
+  label_vacation_range_plural: "Vacations"
+  label_vacation_range_new: "New vacation"
+  label_vacation_plural: "Employees"
+  label_vacation_manager_plural: "Vacation managers"
+  field_vacation_status: "Vacation reason"
+  field_vacation_start_date: "Start date"
+  field_vacation_end_date: "End date"
+  field_last_planned_vacation: "Prev planned vacation"
+  field_active_planned_vacation: "Next planned vacation"
+  field_not_planned_vacation: "Last non-planned vacation"
+  field_is_planned: "Planned"
+
+  text_author_on_vacation: "%{author}, author of the issue %{issue}, is missing from %{vacation_start} to %{vacation_end}"
+  text_assigned_to_on_vacation: "%{assigned_to}, performer of the issue %{issue}, is missing from %{vacation_start} to %{vacation_end}"
+
+  mail_subject_vacation_from_author: "Author %{user} is missing from %{vacation_start} to %{vacation_end}"
+  mail_subject_vacation_from_assigned_to: "Performer %{user} is missing from %{vacation_start} to %{vacation_end}"
+  mail_body_vacation_from_author: "Author %{user} is missing from %{vacation_start} to %{vacation_end}. Please note this in the following issues:"
+  mail_body_vacation_from_assigned_to: "Performer %{user} is missing from %{vacation_start} to %{vacation_end}. Please note this in the following issues:"
+
+  vacation_warning_flash: "Please note, %{name} is missing from %{from} to %{to}"
+
+  label_next_week: "new week"
+  label_prev_week: "last week"
+  label_next_month: "next month"
+  label_prev_month: "last month"
+  label_next_year: "next year"
+  label_prev_year: "last year"
+  activerecord:
+    errors:
+      models:
+        issue:
+          attributes:
+            assigned_to_id:
+              on_vacation: "employee is missing from %{from} to %{to}"
