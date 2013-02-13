@@ -1,9 +1,9 @@
 %h2
   = link_to l(:label_vacation_status_plural), vacation_statuses_path
-  &#187; 
+  &#187;
   =h @vacation_status
 
-- labelled_form_for @vacation_status do |f|
+- form = labelled_form_for @vacation_status do |f|
   = render :partial => 'form', :locals => {:f => f}
   = submit_tag l(:button_save)
-
+= form if Rails::VERSION::MAJOR >= 3  

@@ -3,12 +3,12 @@
 
 %h2=l(:label_vacation_range_plural)
 
-- form_tag({}, :method => :get) do
+%form{:method => :get}
   %fieldset
     %legend= l(:label_filter_plural)
 
     = hidden_field_tag :time_period_start, params[:time_period_start]
-    = hidden_field_tag :time_period_end, params[:time_period_end]    
+    = hidden_field_tag :time_period_end, params[:time_period_end]
 
     %label{:for=>'vacation_status_id'}= l(:field_vacation_status) + ":"
     %select{:id => 'vacation_status_id', :name => 'vacation_status_id', :class => "small", :onchange => "this.form.submit(); return false;"}
@@ -30,8 +30,8 @@
 
     = submit_tag l(:button_apply), :class => "small", :name => nil
     = link_to l(:button_clear), {:action => params[:action]}, :class => 'icon icon-reload'
-   
-    - %w{start end}.each do |type_date|   
+
+    - %w{start end}.each do |type_date|
       %br
       %label=l(:"field_vacation_#{type_date}_date") + ":"
       - %w{all prev_month this_month next_month prev_year this_year next_year}.each do |key|
@@ -42,7 +42,7 @@
           = link_to l(:"label_#{key}"), params.merge( :"time_period_#{type_date}" => key )
         = "(#{VacationRange.time_period(key, :"#{type_date}_date").count}) /"
 
-   
+
 &nbsp;
 
 - if @vacation_ranges.any?
@@ -52,7 +52,7 @@
         %th=l(:field_user)
         %th=l(:field_vacation_status)
         =sort_header_tag :start_date, :caption => l(:field_vacation_start_date)
-        =sort_header_tag :end_date, :caption => l(:field_vacation_end_date)     
+        =sort_header_tag :end_date, :caption => l(:field_vacation_end_date)
         %th
     %tbody
       - @vacation_ranges.each do |vacation_range|
@@ -60,7 +60,7 @@
           %td
             - if vacation = Vacation.find_by_user_id(vacation_range.user_id)
               = link_to h(vacation_range.user), vacation_path(vacation)
-            - else 
+            - else
               = h(vacation_range.user)
           %td= link_to h(vacation_range.vacation_status.name), vacation_status_path(vacation_range.vacation_status), :title => vacation_range.title_description
           %td{:align=>"center"}= format_date(vacation_range.start_date)

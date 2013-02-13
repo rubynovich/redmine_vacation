@@ -3,7 +3,7 @@
 
 %h2=l(:label_vacation_plural)
 
-- form_tag({}, :method => :get) do
+%form{:method => :get}
   %fieldset
     %legend= l(:label_filter_plural)
 
@@ -12,7 +12,7 @@
 
     = submit_tag l(:button_apply), :class => "small", :name => nil
     = link_to l(:button_clear), {:action => params[:action]}, :class => 'icon icon-reload'
-            
+
 &nbsp;
 
 - if @vacations.any?

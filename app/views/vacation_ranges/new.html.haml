@@ -3,7 +3,7 @@
   &#187;
   =l(:label_vacation_range_new)
 
-- labelled_form_for @vacation_range do |f|
+- form = labelled_form_for @vacation_range do |f|
   = render :partial => 'form', :locals => {:f => f}
   = submit_tag l(:button_create)
-
+= form if Rails::VERSION::MAJOR >= 3
