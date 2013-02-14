@@ -4,7 +4,7 @@
   %p= f.select :user_id, User.find(:all, :order => "lastname, firstname").map {|c| [c.name, c.id]}, :required => true, :prompt => t(:prompt_please_select)
   %p
     = f.select :vacation_status_id, VacationStatus.find(:all, :order => :name).map {|c| [c.name, c.id]}, :required => true, :prompt => t(:prompt_please_select)
-    = link_to "", {:controller => :vacation_statuses, :action => :new, :back_url => url_for(params)}, :class => 'icon icon-add'
+    = link_to l(:label_vacation_status_new), {:controller => :vacation_statuses, :action => :new, :back_url => url_for(params)}, :class => 'icon icon-add'
   %p
     = f.text_field :start_date, :size => 10, :label => l(:field_vacation_start_date)
     = calendar_for('vacation_range_start_date')
