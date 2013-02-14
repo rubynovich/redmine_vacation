@@ -4,7 +4,7 @@ class VacationStatusesController < ApplicationController
 
   helper :sort
   include SortHelper
-  
+
   # GET /vacation_statuses/
   def index
     @vacation_status_pages, @vacation_statuses = paginate :vacation_statuses, :per_page => 25, :order => "name"
@@ -15,13 +15,13 @@ class VacationStatusesController < ApplicationController
   def new
     @vacation_status = VacationStatus.new
   end
-  
+
   # POST /vacation_statuses
   def create
     @vacation_status = VacationStatus.new(params[:vacation_status])
     if request.post? && @vacation_status.save
       flash[:notice] = l(:notice_successful_create)
-      redirect_to :action => 'index'
+      redirect_back_or_default :action => 'index'
     else
       render :action => 'new'
     end
@@ -31,27 +31,26 @@ class VacationStatusesController < ApplicationController
   def edit
     @vacation_status = VacationStatus.find(params[:id])
   end
-  
+
   # GET /vacation_statuses/1
   def show
     sort_init 'start_date', 'desc'
     sort_update %w(start_date end_date user_id)
-  
+
     @vacation_status = VacationStatus.find(params[:id])
     @limit = per_page_option
-    
+
     scope = VacationRange.for_vacation_status(@vacation_status.id)
-    )
-    
+
     @vacation_ranges_count = scope.count
     @vacation_range_pages = Paginator.new self, @vacation_ranges_count, @limit, params[:page]
     @offset ||= @vacation_range_pages.current.offset
     @vacation_ranges =  scope.find  :all,
                                   :order => sort_clause,
                                   :limit  =>  @limit,
-                                  :offset =>  @offset    
-  end  
-  
+                                  :offset =>  @offset
+  end
+
 
   # POST /vacation_statuses
   def create
@@ -77,7 +76,7 @@ class VacationStatusesController < ApplicationController
       end
     end
   end
-  
+
   # DELETE /vacation_statuses/1
   def destroy
     VacationStatus.find(params[:id]).destroy
@@ -85,8 +84,8 @@ class VacationStatusesController < ApplicationController
   rescue
     flash[:error] = l(:error_unable_delete_vacation_status)
     redirect_to :action => 'index'
-  end  
-  
+  end
+
   private
     def require_vacation_manager
       (render_403; return false) unless User.current.is_vacation_manager?
