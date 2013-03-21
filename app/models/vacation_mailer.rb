@@ -1,7 +1,7 @@
 class VacationMailer < Mailer
   unloadable
 
-  if Rails::VERSION::MAJOR >= 3
+  if Rails::VERSION::MAJOR < 3
     def from_author(user_id, issue_ids, vacation_range_id, author_id=nil)
       user = User.find(user_id)
       set_language_if_valid user.language
