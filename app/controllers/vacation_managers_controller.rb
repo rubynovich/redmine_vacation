@@ -9,19 +9,19 @@ class VacationManagersController < ApplicationController
       select(&:user).
       sort_by(&:user)
   end
-    
+
   def create
     users = User.find_all_by_id(params[:user_ids])
     users.each do |user|
       VacationManager.create(:user_id => user.id)
     end
-    redirect_to :action => 'index'
+    @vacation_managers = VacationManager.all
+#    redirect_to :action => 'index'
   end
 
   def destroy
     VacationManager.find(params[:id]).destroy if request.delete?
     @vacation_managers = VacationManager.all
-    redirect_to :action => 'index'
-  end    
+#    redirect_to :action => 'index'
+  end
 end
-
