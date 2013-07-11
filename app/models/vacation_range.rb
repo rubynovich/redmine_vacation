@@ -9,8 +9,8 @@ class VacationRange < ActiveRecord::Base
   after_save :send_notifications
 
   validates_presence_of :user_id, :start_date, :vacation_status_id
-  validates_uniqueness_of :start_date, :scope => :user_id
-  validates_uniqueness_of :end_date, :scope => :user_id, :if => Proc.new{ end_date.present? }
+#  validates_uniqueness_of :start_date, :scope => :user_id
+#  validates_uniqueness_of :end_date, :scope => :user_id, :if => Proc.new{ end_date.present? }
   validate :dates_in_row
 
   def title_description
