@@ -1,8 +1,8 @@
 class VacationRangesController < ApplicationController
   unloadable
   before_filter :require_vacation_manager
-  before_filter :find_vacation_range, only: [:edit, :show, :destroy]
-  before_filter :new_vacation_range, only: [:new, :create, :update]
+  before_filter :find_vacation_range, only: [:edit, :show, :update, :destroy]
+  before_filter :new_vacation_range, only: [:new, :create]
 
   helper :sort
   include SortHelper
@@ -11,7 +11,6 @@ class VacationRangesController < ApplicationController
 
   # GET /vacation_ranges/
   def index
-
     sort_init 'start_date', 'desc'
     sort_update %w(start_date end_date)
 
