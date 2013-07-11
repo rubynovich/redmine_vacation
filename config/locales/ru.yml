@@ -13,6 +13,8 @@ ru:
   field_active_planned_vacation: "Следующий плановый отпуск"
   field_not_planned_vacation: "Последнее внеплановое отсутствие"
   field_is_planned: "Плановый"
+  label_vacation_duration: "Продолжительность"
+  field_duration: "Продолжительность"
 
   text_author_on_vacation: "%{author}, автор задачи %{issue}, отсутствует с %{vacation_start} по %{vacation_end}"
   text_assigned_to_on_vacation: "%{assigned_to}, исполнитель задачи %{issue}, отсутствует с %{vacation_start} по %{vacation_end}"

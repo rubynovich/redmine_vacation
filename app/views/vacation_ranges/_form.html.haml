@@ -12,7 +12,8 @@
   %p
     = f.text_field :end_date, :size => 10, :label => l(:field_vacation_end_date)
     = calendar_for('vacation_range_end_date')
-
+  %p
+    = f.text_field :duration, :size => 5, :label => l(:label_vacation_duration)
   %p
     = f.text_area :description, :cols => 60, :rows => 15, :class => 'wiki-edit'
 

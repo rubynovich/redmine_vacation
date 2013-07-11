@@ -53,6 +53,7 @@
         %th=l(:field_vacation_status)
         =sort_header_tag :start_date, :caption => l(:field_vacation_start_date)
         =sort_header_tag :end_date, :caption => l(:field_vacation_end_date)
+        %th=l(:label_vacation_duration)
         %th
     %tbody
       - @vacation_ranges.each do |vacation_range|
@@ -65,6 +66,7 @@
           %td= link_to h(vacation_range.vacation_status.name), vacation_status_path(vacation_range.vacation_status), :title => vacation_range.title_description
           %td{:align=>"center"}= format_date(vacation_range.start_date)
           %td{:align=>"center"}= format_date(vacation_range.end_date)
+          %td{:align=>"center"}= h(vacation_range.duration)
           %td.buttons
             = link_to l(:button_update), {:action => 'edit', :id => vacation_range.id}, :class => 'icon icon-edit'
             = link_to(l(:button_delete), vacation_range_path(vacation_range), :method => :delete, :confirm => l(:text_are_you_sure), :class => 'icon icon-del')

@@ -11,6 +11,7 @@ class VacationRange < ActiveRecord::Base
   validates_presence_of :user_id, :start_date, :vacation_status_id
   validates_uniqueness_of :start_date, :scope => :user_id, :on => :create
   validates_uniqueness_of :end_date, :scope => :user_id, :on => :create, :if => Proc.new{ end_date.present? }
+  validates_numericality_of :duration, only_integer: true, allow_nil: true
   validate :dates_in_row
 
   def title_description

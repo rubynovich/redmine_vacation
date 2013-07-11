@@ -13,6 +13,8 @@ en:
   field_active_planned_vacation: "Next planned vacation"
   field_not_planned_vacation: "Last non-planned vacation"
   field_is_planned: "Planned"
+  label_vacation_duration: "Duration"
+  field_duration: "Duration"
 
   text_author_on_vacation: "%{author}, author of the issue %{issue}, is missing from %{vacation_start} to %{vacation_end}"
   text_assigned_to_on_vacation: "%{assigned_to}, performer of the issue %{issue}, is missing from %{vacation_start} to %{vacation_end}"
