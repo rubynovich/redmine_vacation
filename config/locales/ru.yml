@@ -39,3 +39,13 @@ ru:
           attributes:
             assigned_to_id:
               on_vacation: "сотруднику, который отсутствует c %{from} по %{to}"
+
+  label_vacation_period_any: любая
+  label_vacation_period_today: сегодня
+  label_vacation_period_yesterday: вчера
+  label_vacation_period_last_week: предыдущая неделя
+  label_vacation_period_this_week: эта неделя
+  label_vacation_period_last_month: предыдущий месяц
+  label_vacation_period_this_month: этот месяц
+  label_vacation_period_last_year: прошлый год
+  label_vacation_period_this_year: этот год

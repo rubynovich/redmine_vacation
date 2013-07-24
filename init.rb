@@ -27,22 +27,19 @@ Redmine::Plugin.register :redmine_vacation do
     {:controller => :vacation_managers, :action => :index}, :caption => :label_vacation_manager_plural, :html => {:class => :users}
 end
 
-if Rails::VERSION::MAJOR < 3
-  require 'dispatcher'
-  object_to_prepare = Dispatcher
-else
-  object_to_prepare = Rails.configuration
-end
-
-object_to_prepare.to_prepare do
+Rails.configuration.to_prepare do
   [:user, :issue, :issues_controller].each do |cl|
     require "vacation_#{cl}_patch"
   end
 
+  require_dependency 'vacation_range'
+  require 'time_period_scope'
+
   [
-    [User, VacationPlugin::UserPatch],
-    [Issue, VacationPlugin::IssuePatch],
-    [IssuesController, VacationPlugin::IssuesControllerPatch],
+   [User, VacationPlugin::UserPatch],
+   [Issue, VacationPlugin::IssuePatch],
+   [IssuesController, VacationPlugin::IssuesControllerPatch],
+   [VacationRange, TimePeriodScope]
   ].each do |cl, patch|
     cl.send(:include, patch) unless cl.included_modules.include? patch
   end

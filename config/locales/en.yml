@@ -39,3 +39,13 @@ en:
           attributes:
             assigned_to_id:
               on_vacation: "employee is missing from %{from} to %{to}"
+
+  label_vacation_period_any: any
+  label_vacation_period_today: today
+  label_vacation_period_yesterday: yesterday
+  label_vacation_period_last_week: last week
+  label_vacation_period_this_week: this week
+  label_vacation_period_last_month: last month
+  label_vacation_period_this_month: this month
+  label_vacation_period_last_year: last year
+  label_vacation_period_this_year: this year

@@ -34,12 +34,12 @@
     - %w{start end}.each do |type_date|
       %br
       %label=l(:"field_vacation_#{type_date}_date") + ":"
-      - %w{all prev_month this_month next_month prev_year this_year next_year}.each do |key|
+      - VacationRange.time_periods.each do |key|
         - if params[:"time_period_#{type_date}"] == key
           %strong
-            = l(:"label_#{key}")
+            = l(:"label_vacation_period_#{key}")
         - else
-          = link_to l(:"label_#{key}"), params.merge( :"time_period_#{type_date}" => key )
+          = link_to l(:"label_vacation_period_#{key}"), params.merge( :"time_period_#{type_date}" => key )
         = "(#{VacationRange.time_period(key, :"#{type_date}_date").count}) /"
 
 
