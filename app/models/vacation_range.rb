@@ -13,6 +13,8 @@ class VacationRange < ActiveRecord::Base
   validates_uniqueness_of :end_date, :scope => :user_id, :on => :create, :if => Proc.new{ end_date.present? }
   validates_numericality_of :duration, only_integer: true, allow_nil: true
   validate :dates_in_row
+  validate :duration_length
+
 
   def title_description
     if description.present?
@@ -81,6 +83,12 @@ class VacationRange < ActiveRecord::Base
     if self.end_date.present? and self.start_date > self.end_date
       errors.add :end_date, :invalid
     end
+  end
+
+  def duration_length
+     if self.duration > (self.end_date - self.start_date)+1
+       errors.add :duration, :invalid
+     end
   end
 
   def include?(date)
