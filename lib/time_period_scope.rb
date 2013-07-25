@@ -9,8 +9,10 @@ module TimePeriodScope
 
       unloadable
 
-      def self.time_periods
-        %w{any today yesterday last_week this_week last_month this_month last_year this_year}
+      unless singleton_methods.include? :time_periods
+        def self.time_periods
+          %w{any today yesterday last_week this_week last_month this_month last_year this_year}
+        end
       end
 
       scope :time_period, lambda {|q, field|

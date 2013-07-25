@@ -14,6 +14,11 @@ class VacationRange < ActiveRecord::Base
   validates_numericality_of :duration, only_integer: true, allow_nil: true
   validate :dates_in_row
 
+  def self.time_periods
+    %w{ last_month this_month last_year this_year}
+  end
+
+
   def title_description
     if description.present?
       description.gsub(/\r\n/,"\r")
