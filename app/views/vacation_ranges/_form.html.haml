@@ -2,7 +2,7 @@
 = back_url_hidden_field_tag
 
 .box.tabular
-  %p= f.select :user_id, User.find(:all, :order => "lastname, firstname").map {|c| [c.name, c.id]}, :required => true, :prompt => t(:prompt_please_select)
+  %p= f.select :user_id, User.active.order(:lastname, :firstname).map {|c| [c.name, c.id]}, :required => true, :prompt => t(:prompt_please_select)
   %p
     = f.select :vacation_status_id, VacationStatus.find(:all, :order => :name).map {|c| [c.name, c.id]}, :required => true, :prompt => t(:prompt_please_select)
     = link_to l(:label_vacation_status_new), {:controller => :vacation_statuses, :action => :new, :back_url => url_for(params)}, :class => 'icon icon-add'
