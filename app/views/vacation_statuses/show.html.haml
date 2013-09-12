@@ -20,8 +20,8 @@
         %td{:align=>"center"}= format_date(vacation_range.start_date)
         %td{:align=>"center"}= format_date(vacation_range.end_date)
         %td.buttons
-          = link_to l(:button_update), {:action => 'edit', :id => vacation_range.id}, :class => 'icon icon-edit'
-          = link_to(l(:button_delete), vacation_range_path(vacation_range), :method => :delete, :confirm => l(:text_are_you_sure), :class => 'icon icon-del')
+          = link_to l(:button_update), edit_vacation_range_path(vacation_range), class: 'icon icon-edit'
+          = link_to(l(:button_delete), vacation_range_path(vacation_range), method: 'delete', confirm: l(:text_are_you_sure), class: 'icon icon-del')
 
 %p.pagination= pagination_links_full @vacation_range_pages, @vacation_ranges_count
 
