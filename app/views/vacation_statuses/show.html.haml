@@ -3,7 +3,7 @@
 
 %h2
   = link_to l(:label_vacation_status_plural), vacation_statuses_path
-  &#187; 
+  &#187;
   =h @vacation_status.name
 
 %table.list
@@ -11,12 +11,12 @@
     %tr
       =sort_header_tag :user_id, :caption => l(:field_user)
       =sort_header_tag :start_date, :caption => l(:field_vacation_start_date)
-      =sort_header_tag :end_date, :caption => l(:field_vacation_end_date)     
+      =sort_header_tag :end_date, :caption => l(:field_vacation_end_date)
       %th
   %tbody
     - for vacation_range in @vacation_ranges
       %tr{:class=>cycle("odd", "even")}
-        %td= link_to h(vacation_range.user.name), vacation_path(Vacation.find_by_user_id(vacation_range.user_id))
+        %td= link_to h(vacation_range.user), vacation_path(Vacation.find_by_user_id(vacation_range.user_id))
         %td{:align=>"center"}= format_date(vacation_range.start_date)
         %td{:align=>"center"}= format_date(vacation_range.end_date)
         %td.buttons
