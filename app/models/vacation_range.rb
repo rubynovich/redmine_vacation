@@ -126,7 +126,7 @@ class VacationRange < ActiveRecord::Base
   def send_notifications
     issues_author = Issue.with_author(self.user_id).open.
       on_vacation(self).inject({}){ |result,issue|
-      if issue.assigned_to.present?
+      if issue.assigned_to.present? && issue.assigned_to.is_a?(User)
         result.update(issue.assigned_to_id => [issue.id]){|k,o,n| o+n }\
       else
         result
