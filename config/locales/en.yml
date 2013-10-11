@@ -1,5 +1,8 @@
 # English strings go here for Rails i18n
 en:
+
+  label_hr_menu: HR
+
   label_vacation_status_plural: "Vacation reasons"
   label_vacation_status_new: "New vacation reason"
   label_vacation_range_plural: "Vacations"

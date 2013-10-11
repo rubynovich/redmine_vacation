@@ -1,5 +1,8 @@
 # Russian strings go here for Rails i18n
 ru:
+
+  label_hr_menu: HR
+
   label_vacation_status_plural: "Причины отсутствия"
   label_vacation_status_new: "Новая причина отсутствия"
   label_vacation_range_plural: "Отсутствия"
