@@ -10,33 +10,28 @@ Redmine::Plugin.register :redmine_vacation do
 
   Redmine::MenuManager.map :top_menu do |menu| 
 
-    unless menu.exists?(:hr)
-      menu.push(:hr, "#", 
-                { :after => :projects,
-                  :parent => :top_menu, 
-                  :caption => :label_hr_menu
-                })
-    end
+    user_is_vacation_manager = Proc.new{ User.current.is_vacation_manager? }
 
+    parent = menu.exists?(:hr) ? :hr : :top_menu
     menu.push(:vacations, 
               {:controller => :vacations, :action => :index},
-              { :parent => :hr,
+              { :parent => parent,
                 :caption => :label_vacation_plural,
-                :if => Proc.new{ User.current.is_vacation_manager? }
+                :if => user_is_vacation_manager
               })
 
     menu.push(:vacation_ranges,
               {:controller => :vacation_ranges, :action => :index},
-              { :parent => :hr,
+              { :parent => parent,
                 :caption => :label_vacation_range_plural,
-                :if => Proc.new{ User.current.is_vacation_manager? }
+                :if => user_is_vacation_manager
               })
 
     menu.push(:vacation_statuses,
               {:controller => :vacation_statuses, :action => :index},
-              { :parent => :hr,
+              { :parent => parent,
                 :caption => :label_vacation_status_plural,
-                :if => Proc.new{ User.current.is_vacation_manager? }
+                :if => user_is_vacation_manager
               })
 
   end
