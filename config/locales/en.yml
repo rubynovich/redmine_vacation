@@ -4,7 +4,7 @@ en:
   label_vacation_status_new: "New vacation reason"
   label_vacation_range_plural: "Vacations"
   label_vacation_range_new: "New vacation"
-  label_vacation_plural: "Employees"
+  label_vacation_plural: "Vacations"
   label_vacation_manager_plural: "Vacation managers"
   field_vacation_status: "Vacation reason"
   field_vacation_start_date: "Start date"

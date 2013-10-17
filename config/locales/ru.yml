@@ -4,7 +4,7 @@ ru:
   label_vacation_status_new: "Новая причина отсутствия"
   label_vacation_range_plural: "Отсутствия"
   label_vacation_range_new: "Новое отсутствие"
-  label_vacation_plural: "Сотрудники"
+  label_vacation_plural: "Отпуска"
   label_vacation_manager_plural: "Отпуск-менеджеры"
   field_vacation_status: "Причина отсутствия"
   field_vacation_start_date: "Дата начала"
