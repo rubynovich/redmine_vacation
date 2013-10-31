@@ -8,8 +8,8 @@ module VacationPlugin
       base.send(:include, InstanceMethods)
 
       base.class_eval do
-        before_filter :warning_flash, :only => [:create, :update]
-        before_filter :set_attributes_before_change, :only => [:update]
+        before_filter :warning_flash, only: [:create, :update]
+        before_filter :set_attributes_before_change, only: [:update]
       end
 
     end
@@ -24,10 +24,10 @@ module VacationPlugin
 
       def warning_flash
         assigned_to_id = params[:issue][:assigned_to_id]
+        due_date = Date.parse(params[:issue][:due_date])
         if (vacation = Vacation.find_by_user_id(assigned_to_id))&&
           (vacation_range = vacation.active_planned_vacation)&&
-#          (vacation_range.start_date < issue.due_date + 1.month)
-          ((vacation_range.start_date > Date.today))
+          (vacation_range.start_date < due_date + 1.month)
 
           flash[:warning] = t(:vacation_warning_flash,
             :name => User.find(assigned_to_id).name,
