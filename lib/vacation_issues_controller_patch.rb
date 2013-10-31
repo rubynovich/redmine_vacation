@@ -49,6 +49,7 @@ module VacationPlugin
             :name => User.find(assigned_to_id).name,
             :from => vacation_range.start_date.strftime("%d.%m.%Y"),
             :to => vacation_range.end_date.strftime("%d.%m.%Y"))
+        end
       end
     end
   end
