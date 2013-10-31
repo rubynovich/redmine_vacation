@@ -26,7 +26,8 @@ module VacationPlugin
         assigned_to_id = params[:issue][:assigned_to_id]
         if (vacation = Vacation.find_by_user_id(assigned_to_id))&&
           (vacation_range = vacation.active_planned_vacation)&&
-          (vacation_range.start_date < issue.due_date + 1.month)
+#          (vacation_range.start_date < issue.due_date + 1.month)
+          ((vacation_range.start_date > Date.today))
 
           flash[:warning] = t(:vacation_warning_flash,
             :name => User.find(assigned_to_id).name,
