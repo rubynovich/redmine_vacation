@@ -37,18 +37,22 @@ module VacationPlugin
       end
 
       def warning_flash_for_create
-        if params[:issue].present? && params[:issue][:assigned_to_id].present? && params[:issue][:due_date].present?
+        begin
           assigned_to_id = params[:issue][:assigned_to_id]
           due_date = Date.parse(params[:issue][:due_date])
           warning_flash(assigned_to_id, due_date)
+        rescue
         end
       end
 
       def warning_flash_for_update
-        issue = Issue.find(params[:id])
-        assigned_to_id = params[:issue] && params[:issue][:assigned_to_id] || issue.assigned_to_id
-        due_date = params[:issue] && params[:issue][:due_date] && Date.parse(params[:issue][:due_date]) || issue.due_date
-        warning_flash(assigned_to_id, due_date)
+        begin
+          issue = Issue.find(params[:id])
+          assigned_to_id = params[:issue] && params[:issue][:assigned_to_id] || issue.assigned_to_id
+          due_date = params[:issue] && params[:issue][:due_date] && Date.parse(params[:issue][:due_date]) || issue.due_date
+          warning_flash(assigned_to_id, due_date)
+        rescue
+        end
       end
     end
   end
