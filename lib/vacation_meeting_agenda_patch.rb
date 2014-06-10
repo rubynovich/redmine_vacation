@@ -7,19 +7,30 @@ module RedmineVacation
       end
 
       def meeting_members_on_vacation_create
-        self.meeting_members.each do |meeting_member|
-          if vacation = Vacation.find_by_user_id(meeting_member.user_id)
+        members = [self.asserter, self.meeting_questions.map(&:user) , self.meeting_members.map(&:user), self.meeting_approvers.map(&:user)].flatten.uniq.compact
+        members.each do |user|
+          if vacation = Vacation.find_by_user_id(user.id)
             if on_vacation?(vacation_range = vacation.active_planned_vacation) ||
                 on_vacation?(vacation_range = vacation.last_planned_vacation) ||
                 on_vacation?(vacation_range = vacation.not_planned_vacation)
-              errors.add :meeting_members, :on_vacation,
+
+              if user == self.asserter
+                role = :asserter
+              elsif self.meeting_questions.map(&:user).include?(user)
+                role = :"meeting_questions.user"
+              elsif self.meeting_approvers.map(&:user).include?(user)
+                role = :meeting_approvers
+              end
+              errors.add role, :on_vacation,
                          :from => vacation_range.start_date.strftime("%d.%m.%Y"),
                          :to => vacation_range.end_date.strftime("%d.%m.%Y"),
-                         :user => meeting_member
+                         :user => user
             end
           end
         end
+
       end
+
 
 
       def member_on_vacation?(user)

@@ -39,6 +39,10 @@ ru:
           attributes:
             meeting_members:
               on_vacation: "%{user} отсутствует с %{from} по %{to} "
+            meeting_approvers:
+              on_vacation: "%{user} отсутствует с %{from} по %{to} "
+            meeting_questions:
+              on_vacation: "%{user} отсутствует с %{from} по %{to} "
         issue:
           attributes:
             assigned_to_id:
