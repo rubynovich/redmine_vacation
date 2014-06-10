@@ -17,7 +17,7 @@ module RedmineVacation
               if user == self.asserter
                 role = :asserter
               elsif self.meeting_questions.map(&:user).include?(user)
-                role = [:meeting_questions, :user]
+                role = :"meeting_questions.user"
               elsif self.meeting_approvers.map(&:user).include?(user)
                 role = :meeting_approvers
               else
