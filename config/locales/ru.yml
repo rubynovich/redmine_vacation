@@ -18,6 +18,8 @@ ru:
   label_vacation_duration: "Дней"
   field_duration: "Дней"
 
+  label_meeting_member_was_not_invite_but_on_vacation: "Отсутсвует с %{from} по %{to}, не отправлено"
+
   text_author_on_vacation: "%{author}, автор задачи %{issue}, отсутствует с %{vacation_start} по %{vacation_end}"
   text_assigned_to_on_vacation: "%{assigned_to}, исполнитель задачи %{issue}, отсутствует с %{vacation_start} по %{vacation_end}"
 

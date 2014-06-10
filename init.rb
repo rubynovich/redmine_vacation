@@ -81,5 +81,5 @@ Rails.configuration.to_prepare do
   require_dependency 'vacation_meeting_agenda_patch'
 
   MeetingAgenda.send(:include, RedmineVacation::Patches::MeetingAgendaPatch)
-
+  MeetingAgendasController.send(:include, RedmineVacation::Patches::MeetingAgendasControllerPatch)
 end
