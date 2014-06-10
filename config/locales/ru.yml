@@ -13,6 +13,7 @@ ru:
   field_active_planned_vacation: "Следующий плановый отпуск"
   field_not_planned_vacation: "Последнее внеплановое отсутствие"
   field_meeting_question_users: 'Докладчик'
+  field_meeting_approver_users: 'Согласующий'
   field_is_planned: "Плановый"
   label_vacation_duration: "Дней"
   field_duration: "Дней"

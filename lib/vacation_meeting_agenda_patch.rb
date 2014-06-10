@@ -9,7 +9,7 @@ module RedmineVacation
       end
 
       def meeting_members_on_vacation_create
-        members = [self.asserter, self.meeting_questions.map(&:user) , self.meeting_members.map(&:user), self.meeting_approvers.map(&:user)].flatten.uniq.compact
+        members = [self.asserter, self.meeting_questions.map(&:user) , self.meeting_members.map(&:user), self.meeting_approvers.where(deleted: false).map(&:user)].flatten.uniq.compact
         members.each do |user|
           if vacation = Vacation.find_by_user_id(user.id)
             if on_vacation?(vacation_range = vacation.active_planned_vacation) ||
@@ -20,7 +20,7 @@ module RedmineVacation
                 role = :asserter
               elsif self.meeting_questions.map(&:user).include?(user)
                 role = :meeting_question_users
-              elsif self.meeting_approvers.map(&:user).include?(user)
+              elsif self.meeting_approvers.where(deleted: false).map(&:user).include?(user)
                 role = :meeting_approver_users
               else
                 role = :meeting_members
