@@ -77,8 +77,10 @@ Rails.configuration.to_prepare do
   ].each do |cl, patch|
     cl.send(:include, patch) unless cl.included_modules.include? patch
   end
-
+  require_dependency 'meeting_agendas_controller'
+  require_dependency 'meeting_agenda'
   require_dependency 'vacation_meeting_agenda_patch'
+  require_dependency 'vacation_meeting_agendas_controller_patch'
 
   MeetingAgenda.send(:include, RedmineVacation::Patches::MeetingAgendaPatch)
   MeetingAgendasController.send(:include, RedmineVacation::Patches::MeetingAgendasControllerPatch)
