@@ -12,6 +12,7 @@ ru:
   field_last_planned_vacation: "Предыдущий плановый отпуск"
   field_active_planned_vacation: "Следующий плановый отпуск"
   field_not_planned_vacation: "Последнее внеплановое отсутствие"
+  field_meeting_question_users: 'Докладчик'
   field_is_planned: "Плановый"
   label_vacation_duration: "Дней"
   field_duration: "Дней"
@@ -39,9 +40,11 @@ ru:
           attributes:
             meeting_members:
               on_vacation: "%{user} отсутствует с %{from} по %{to} "
-            meeting_approvers:
+            asserter:
               on_vacation: "%{user} отсутствует с %{from} по %{to} "
-            meeting_questions:
+            meeting_approver_users:
+              on_vacation: "%{user} отсутствует с %{from} по %{to} "
+            meeting_question_users:
               on_vacation: "%{user} отсутствует с %{from} по %{to} "
         issue:
           attributes:
