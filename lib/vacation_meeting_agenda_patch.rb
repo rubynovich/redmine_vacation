@@ -20,6 +20,8 @@ module RedmineVacation
                 role = [:meeting_questions, :user]
               elsif self.meeting_approvers.map(&:user).include?(user)
                 role = :meeting_approvers
+              else
+                role = :meeting_members
               end
               errors.add role, :on_vacation,
                          :from => vacation_range.start_date.strftime("%d.%m.%Y"),
