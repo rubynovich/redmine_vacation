@@ -14,19 +14,26 @@ module RedmineVacation
                 on_vacation?(vacation_range = vacation.last_planned_vacation) ||
                 on_vacation?(vacation_range = vacation.not_planned_vacation)
 
+              is_added = false
+
               if user == self.asserter
                 role = :asserter
               elsif self.meeting_questions.map(&:user).include?(user)
                 role = :meeting_questions
               elsif self.meeting_approvers.map(&:user).include?(user)
                 role = :meeting_approvers
+                errors.add role, :user, :on_vacation,
+                           :from => vacation_range.start_date.strftime("%d.%m.%Y"),
+                           :to => vacation_range.end_date.strftime("%d.%m.%Y"),
+                           :user => user
+                is_added = true
               else
                 role = :meeting_members
               end
-              errors.add role, :on_vacation,
+              errors.add role, :user, :on_vacation,
                          :from => vacation_range.start_date.strftime("%d.%m.%Y"),
                          :to => vacation_range.end_date.strftime("%d.%m.%Y"),
-                         :user => user
+                         :user => user unless is_added
             end
           end
         end
