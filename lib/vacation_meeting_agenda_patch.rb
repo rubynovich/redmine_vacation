@@ -21,6 +21,18 @@ module RedmineVacation
         end
       end
 
+
+      def member_on_vacation?(user)
+        if vacation = Vacation.find_by_user_id(user.id)
+          if on_vacation?(vacation_range = vacation.active_planned_vacation) ||
+              on_vacation?(vacation_range = vacation.last_planned_vacation) ||
+              on_vacation?(vacation_range = vacation.not_planned_vacation)
+            return true
+          end
+        end
+        return false
+      end
+
       #def assigned_to_on_vacation_update
       #  if @attributes_before_change.present? &&
       #      (@attributes_before_change['assigned_to_id'] != self.assigned_to_id)
