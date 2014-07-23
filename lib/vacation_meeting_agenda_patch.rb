@@ -66,7 +66,7 @@ module RedmineVacation
 
       def on_vacation?(vacation_range)
         vacation_range.present? && self.meet_on.present?
-          (vacation_range.nil? ? false : vacation_range.include?(self.meet_on))
+          (vacation_range.nil? ? false : (self.meet_on ? vacation_range.include?(self.meet_on) : false))
       end
     end
   end
