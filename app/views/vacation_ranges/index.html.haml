@@ -9,6 +9,7 @@
 
     = hidden_field_tag :time_period_start, params[:time_period_start]
     = hidden_field_tag :time_period_end, params[:time_period_end]
+    = hidden_field_tag :user_id, params[:user_id]
 
     %label{:for=>'vacation_status_id'}= l(:field_vacation_status) + ":"
     %select{:id => 'vacation_status_id', :name => 'vacation_status_id', :class => "small", :onchange => "this.form.submit(); return false;"}

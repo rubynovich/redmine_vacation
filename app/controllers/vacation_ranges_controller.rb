@@ -21,6 +21,11 @@ class VacationRangesController < ApplicationController
       for_vacation_status(params[:vacation_status_id]).
       like_username(params[:name])
 
+    if params[:user_id].present?
+      @scope = @scope.where(user_id: params[:user_id])
+    end
+
+
     @vacation_ranges_count = @scope.count
     @vacation_range_pages = Paginator.new self, @vacation_ranges_count, @limit, params[:page]
     @offset ||= @vacation_range_pages.current.offset
