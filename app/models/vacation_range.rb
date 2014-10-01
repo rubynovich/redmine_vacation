@@ -69,6 +69,10 @@ class VacationRange < ActiveRecord::Base
       :joins => :vacation_status}
   }
 
+  scope :by_range, lambda{|period_start, period_end|
+    where(["start_date <= ? and end_date >= ?", (period_end.to_date rescue nil) || VacationRange.maximum(:start_date), (period_start.to_date rescue nil) || VacationRange.minimum(:start_date)])
+  }
+
 
   def to_s
     str = format_date(start_date)

@@ -25,6 +25,9 @@ class VacationRangesController < ApplicationController
       @scope = @scope.where(user_id: params[:user_id])
     end
 
+    if params[:period_start].present? || params[:period_end].present?
+      @scope = @scope.by_range(params[:period_start], params[:period_end])
+    end
 
     @vacation_ranges_count = @scope.count
     @vacation_range_pages = Paginator.new self, @vacation_ranges_count, @limit, params[:page]
